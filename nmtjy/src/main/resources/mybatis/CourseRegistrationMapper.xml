@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.czy.nmtjy.mapper.CourseRegistrationMapper">
+  <resultMap id="BaseResultMap" type="cn.czy.nmtjy.model.po.CourseRegistrationPo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
+    <result column="student_id" jdbcType="BIGINT" property="studentId" />
+    <result column="times" jdbcType="TINYINT" property="times" />
+    <result column="pay_status" jdbcType="BIT" property="payStatus" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, course_id, student_id, times, pay_status, status, remark, creator, create_time, 
+    operator, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from course_registration
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from course_registration
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.czy.nmtjy.model.po.CourseRegistrationPo">
+    insert into course_registration (id, course_id, student_id, 
+      times, pay_status, status, remark, 
+      creator, create_time, operator, 
+      operate_time)
+    values (#{id,jdbcType=BIGINT}, #{courseId,jdbcType=BIGINT}, #{studentId,jdbcType=BIGINT}, 
+      #{times,jdbcType=TINYINT}, #{payStatus,jdbcType=BIT}, #{status,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, 
+      #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.czy.nmtjy.model.po.CourseRegistrationPo">
+    insert into course_registration
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="times != null">
+        times,
+      </if>
+      <if test="payStatus != null">
+        pay_status,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="times != null">
+        #{times,jdbcType=TINYINT},
+      </if>
+      <if test="payStatus != null">
+        #{payStatus,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.czy.nmtjy.model.po.CourseRegistrationPo">
+    update course_registration
+    <set>
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="times != null">
+        times = #{times,jdbcType=TINYINT},
+      </if>
+      <if test="payStatus != null">
+        pay_status = #{payStatus,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.czy.nmtjy.model.po.CourseRegistrationPo">
+    update course_registration
+    set course_id = #{courseId,jdbcType=BIGINT},
+      student_id = #{studentId,jdbcType=BIGINT},
+      times = #{times,jdbcType=TINYINT},
+      pay_status = #{payStatus,jdbcType=BIT},
+      status = #{status,jdbcType=BIT},
+      remark = #{remark,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

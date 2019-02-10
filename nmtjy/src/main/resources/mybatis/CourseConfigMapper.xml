@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.czy.nmtjy.mapper.CourseConfigMapper">
+  <resultMap id="BaseResultMap" type="cn.czy.nmtjy.model.po.CourseConfigPo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+</mapper>

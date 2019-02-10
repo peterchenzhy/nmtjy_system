@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.czy.nmtjy.mapper.CourseMapper">
+  <resultMap id="BaseResultMap" type="cn.czy.nmtjy.model.po.CoursePo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="code" jdbcType="INTEGER" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="progress" jdbcType="TINYINT" property="progress" />
+    <result column="season" jdbcType="TINYINT" property="season" />
+    <result column="per_time" jdbcType="TINYINT" property="perTime" />
+    <result column="grade" jdbcType="TINYINT" property="grade" />
+    <result column="times" jdbcType="TINYINT" property="times" />
+    <result column="per_price" jdbcType="DECIMAL" property="perPrice" />
+    <result column="material_pay" jdbcType="DECIMAL" property="materialPay" />
+    <result column="other_pay" jdbcType="DECIMAL" property="otherPay" />
+    <result column="start_date" jdbcType="INTEGER" property="startDate" />
+    <result column="end_date" jdbcType="INTEGER" property="endDate" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, name, type, progress, season, per_time, grade, times, per_price, material_pay, 
+    other_pay, start_date, end_date, description, status, remark, creator, create_time, 
+    operator, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from course
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.czy.nmtjy.model.po.CoursePo">
+    insert into course (id, code, name, 
+      type, progress, season, 
+      per_time, grade, times, 
+      per_price, material_pay, other_pay, 
+      start_date, end_date, description, 
+      status, remark, creator, 
+      create_time, operator, operate_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=TINYINT}, #{progress,jdbcType=TINYINT}, #{season,jdbcType=TINYINT}, 
+      #{perTime,jdbcType=TINYINT}, #{grade,jdbcType=TINYINT}, #{times,jdbcType=TINYINT}, 
+      #{perPrice,jdbcType=DECIMAL}, #{materialPay,jdbcType=DECIMAL}, #{otherPay,jdbcType=DECIMAL}, 
+      #{startDate,jdbcType=INTEGER}, #{endDate,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, #{creator,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, #{operateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.czy.nmtjy.model.po.CoursePo">
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="progress != null">
+        progress,
+      </if>
+      <if test="season != null">
+        season,
+      </if>
+      <if test="perTime != null">
+        per_time,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="times != null">
+        times,
+      </if>
+      <if test="perPrice != null">
+        per_price,
+      </if>
+      <if test="materialPay != null">
+        material_pay,
+      </if>
+      <if test="otherPay != null">
+        other_pay,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="progress != null">
+        #{progress,jdbcType=TINYINT},
+      </if>
+      <if test="season != null">
+        #{season,jdbcType=TINYINT},
+      </if>
+      <if test="perTime != null">
+        #{perTime,jdbcType=TINYINT},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=TINYINT},
+      </if>
+      <if test="times != null">
+        #{times,jdbcType=TINYINT},
+      </if>
+      <if test="perPrice != null">
+        #{perPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="materialPay != null">
+        #{materialPay,jdbcType=DECIMAL},
+      </if>
+      <if test="otherPay != null">
+        #{otherPay,jdbcType=DECIMAL},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.czy.nmtjy.model.po.CoursePo">
+    update course
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="progress != null">
+        progress = #{progress,jdbcType=TINYINT},
+      </if>
+      <if test="season != null">
+        season = #{season,jdbcType=TINYINT},
+      </if>
+      <if test="perTime != null">
+        per_time = #{perTime,jdbcType=TINYINT},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=TINYINT},
+      </if>
+      <if test="times != null">
+        times = #{times,jdbcType=TINYINT},
+      </if>
+      <if test="perPrice != null">
+        per_price = #{perPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="materialPay != null">
+        material_pay = #{materialPay,jdbcType=DECIMAL},
+      </if>
+      <if test="otherPay != null">
+        other_pay = #{otherPay,jdbcType=DECIMAL},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.czy.nmtjy.model.po.CoursePo">
+    update course
+    set code = #{code,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      progress = #{progress,jdbcType=TINYINT},
+      season = #{season,jdbcType=TINYINT},
+      per_time = #{perTime,jdbcType=TINYINT},
+      grade = #{grade,jdbcType=TINYINT},
+      times = #{times,jdbcType=TINYINT},
+      per_price = #{perPrice,jdbcType=DECIMAL},
+      material_pay = #{materialPay,jdbcType=DECIMAL},
+      other_pay = #{otherPay,jdbcType=DECIMAL},
+      start_date = #{startDate,jdbcType=INTEGER},
+      end_date = #{endDate,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      remark = #{remark,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
