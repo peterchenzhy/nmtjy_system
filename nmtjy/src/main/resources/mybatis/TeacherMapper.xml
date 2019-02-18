@@ -26,7 +26,11 @@
     from teacher
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <select id="queryTeacherByName" resultMap="BaseResultMap">
+        select * from teacher where name =#{name} status = 1
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from teacher
     where id = #{id,jdbcType=BIGINT}
   </delete>
@@ -45,12 +49,7 @@
   <insert id="insertSelective" parameterType="cn.czy.nmtjy.model.po.TeacherPo">
     insert into teacher
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
         name,
-      </if>
       <if test="birthday != null">
         birthday,
       </if>
@@ -63,35 +62,21 @@
       <if test="majorGrade != null">
         major_grade,
       </if>
-      <if test="star != null">
-        star,
-      </if>
-      <if test="status != null">
         status,
-      </if>
       <if test="remark != null">
         remark,
       </if>
       <if test="creator != null">
         creator,
       </if>
-      <if test="createTime != null">
         create_time,
-      </if>
       <if test="operator != null">
         operator,
       </if>
-      <if test="operateTime != null">
         operate_time,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="name != null">
         #{name,jdbcType=VARCHAR},
-      </if>
       <if test="birthday != null">
         #{birthday,jdbcType=INTEGER},
       </if>
@@ -104,27 +89,18 @@
       <if test="majorGrade != null">
         #{majorGrade,jdbcType=TINYINT},
       </if>
-      <if test="star != null">
-        #{star,jdbcType=BIT},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=BIT},
-      </if>
+     1,
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
       <if test="creator != null">
         #{creator,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
+    now(),
       <if test="operator != null">
         #{operator,jdbcType=INTEGER},
       </if>
-      <if test="operateTime != null">
-        #{operateTime,jdbcType=TIMESTAMP},
-      </if>
+        now(),
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="cn.czy.nmtjy.model.po.TeacherPo">

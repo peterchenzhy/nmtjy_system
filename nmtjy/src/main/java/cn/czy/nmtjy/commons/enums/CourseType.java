@@ -20,6 +20,8 @@ public enum  CourseType {
         地理(7, "地理"),
         历史(8, "历史");
 
+        public static final String COURSE_TYPE = "COURSE_TYPE";
+
         CourseType(int code, String descrition) {
             this.code = code;
             this.descrition = descrition;

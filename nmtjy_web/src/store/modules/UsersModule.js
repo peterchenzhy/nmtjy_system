@@ -32,7 +32,7 @@ export default {
                 // method: 'post',
                 // url: '/oauth/token',
                 method: 'get',
-                url: '/nmtjy-server/test1',
+                url: '/nmtjy-server/',
                 params: {
                     // 'username': user_name,
                     // 'password': user_password,

@@ -9,7 +9,7 @@ public class CourseRegistrationPo extends BasePo {
 
     private Integer times;
 
-    private Boolean payStatus;
+    private Integer payStatus;
 
     private String remark;
 
@@ -45,11 +45,11 @@ public class CourseRegistrationPo extends BasePo {
         this.times = times;
     }
 
-    public Boolean getPayStatus() {
+    public Integer getPayStatus() {
         return payStatus;
     }
 
-    public void setPayStatus(Boolean payStatus) {
+    public void setPayStatus(Integer payStatus) {
         this.payStatus = payStatus;
     }
 

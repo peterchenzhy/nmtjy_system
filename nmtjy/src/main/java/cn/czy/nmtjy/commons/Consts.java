@@ -7,5 +7,17 @@ package cn.czy.nmtjy.commons;
  */
 public interface Consts {
 
-    public static final String SERVER="nmtjy-server";
+    //服务名
+    String SERVER="nmtjy-server";
+
+//    //校区配置
+//    String SCHOOL_AREA ="SCHOOL_AREA";
+
+    //进度配置
+    String COURSE_PROGRESS = "COURSE_PROGRESS";
+
+    //季节班次
+    String COURSE_SEASON ="COURSE_SEASON";
+
+
 }

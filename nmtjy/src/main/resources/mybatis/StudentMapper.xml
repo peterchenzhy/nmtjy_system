@@ -1,175 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.czy.nmtjy.mapper.StudentMapper">
-  <resultMap id="BaseResultMap" type="cn.czy.nmtjy.model.po.StudentPo">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="birthday" jdbcType="INTEGER" property="birthday" />
-    <result column="elementary_school" jdbcType="VARCHAR" property="elementarySchool" />
-    <result column="middle_school" jdbcType="VARCHAR" property="middleSchool" />
-    <result column="high_school" jdbcType="VARCHAR" property="highSchool" />
-    <result column="grade" jdbcType="INTEGER" property="grade" />
-    <result column="status" jdbcType="BIT" property="status" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="creator" jdbcType="INTEGER" property="creator" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="operator" jdbcType="INTEGER" property="operator" />
-    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="cn.czy.nmtjy.model.po.StudentPo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="birthday" jdbcType="INTEGER" property="birthday"/>
+        <result column="elementary_school" jdbcType="VARCHAR" property="elementarySchool"/>
+        <result column="middle_school" jdbcType="VARCHAR" property="middleSchool"/>
+        <result column="high_school" jdbcType="VARCHAR" property="highSchool"/>
+        <result column="grade" jdbcType="INTEGER" property="grade"/>
+        <result column="status" jdbcType="BIT" property="status"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="creator" jdbcType="INTEGER" property="creator"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="operator" jdbcType="INTEGER" property="operator"/>
+        <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, name, birthday, elementary_school, middle_school, high_school, grade, status, 
     remark, creator, create_time, operator, operate_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from student
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from student
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="queryStudentByName" resultMap="BaseResultMap">
+      select * from student where name = #{name} and status =1 ;
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from student
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.czy.nmtjy.model.po.StudentPo">
-    insert into student (id, name, birthday, 
-      elementary_school, middle_school, high_school, 
-      grade, status, remark, 
-      creator, create_time, operator, 
-      operate_time)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{birthday,jdbcType=INTEGER}, 
-      #{elementarySchool,jdbcType=VARCHAR}, #{middleSchool,jdbcType=VARCHAR}, #{highSchool,jdbcType=VARCHAR}, 
-      #{grade,jdbcType=INTEGER}, #{status,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, 
-      #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, 
-      #{operateTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.czy.nmtjy.model.po.StudentPo">
-    insert into student
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="birthday != null">
-        birthday,
-      </if>
-      <if test="elementarySchool != null">
-        elementary_school,
-      </if>
-      <if test="middleSchool != null">
-        middle_school,
-      </if>
-      <if test="highSchool != null">
-        high_school,
-      </if>
-      <if test="grade != null">
-        grade,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="creator != null">
-        creator,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="operator != null">
-        operator,
-      </if>
-      <if test="operateTime != null">
-        operate_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null">
-        #{birthday,jdbcType=INTEGER},
-      </if>
-      <if test="elementarySchool != null">
-        #{elementarySchool,jdbcType=VARCHAR},
-      </if>
-      <if test="middleSchool != null">
-        #{middleSchool,jdbcType=VARCHAR},
-      </if>
-      <if test="highSchool != null">
-        #{highSchool,jdbcType=VARCHAR},
-      </if>
-      <if test="grade != null">
-        #{grade,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=BIT},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="creator != null">
-        #{creator,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="operator != null">
-        #{operator,jdbcType=INTEGER},
-      </if>
-      <if test="operateTime != null">
-        #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.czy.nmtjy.model.po.StudentPo">
-    update student
-    <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null">
-        birthday = #{birthday,jdbcType=INTEGER},
-      </if>
-      <if test="elementarySchool != null">
-        elementary_school = #{elementarySchool,jdbcType=VARCHAR},
-      </if>
-      <if test="middleSchool != null">
-        middle_school = #{middleSchool,jdbcType=VARCHAR},
-      </if>
-      <if test="highSchool != null">
-        high_school = #{highSchool,jdbcType=VARCHAR},
-      </if>
-      <if test="grade != null">
-        grade = #{grade,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=BIT},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="creator != null">
-        creator = #{creator,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="operator != null">
-        operator = #{operator,jdbcType=INTEGER},
-      </if>
-      <if test="operateTime != null">
-        operate_time = #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.czy.nmtjy.model.po.StudentPo">
+
+    <insert id="insertSelective" parameterType="cn.czy.nmtjy.model.po.StudentPo">
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            name,
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="elementarySchool != null">
+                elementary_school,
+            </if>
+            <if test="middleSchool != null">
+                middle_school,
+            </if>
+            <if test="highSchool != null">
+                high_school,
+            </if>
+            <if test="grade != null">
+                grade,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+                create_time,
+            <if test="operator != null">
+                operator,
+            </if>
+                operate_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{name,jdbcType=VARCHAR},
+            <if test="birthday != null">
+                #{birthday,jdbcType=INTEGER},
+            </if>
+            <if test="elementarySchool != null">
+                #{elementarySchool,jdbcType=VARCHAR},
+            </if>
+            <if test="middleSchool != null">
+                #{middleSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="highSchool != null">
+                #{highSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="grade != null">
+                #{grade,jdbcType=INTEGER},
+            </if>
+            1,
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=INTEGER},
+            </if>
+            now(),
+            <if test="operator != null">
+                #{operator,jdbcType=INTEGER},
+            </if>
+            now(),
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.czy.nmtjy.model.po.StudentPo">
+        update student
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=INTEGER},
+            </if>
+            <if test="elementarySchool != null">
+                elementary_school = #{elementarySchool,jdbcType=VARCHAR},
+            </if>
+            <if test="middleSchool != null">
+                middle_school = #{middleSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="highSchool != null">
+                high_school = #{highSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="grade != null">
+                grade = #{grade,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=BIT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=INTEGER},
+            </if>
+            <if test="operateTime != null">
+                operate_time = #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.czy.nmtjy.model.po.StudentPo">
     update student
     set name = #{name,jdbcType=VARCHAR},
       birthday = #{birthday,jdbcType=INTEGER},

@@ -34,6 +34,11 @@ public class CoursePo extends BasePo {
 
     private String description;
 
+
+    private Integer year ;
+
+    private Integer area;
+
     private String remark;
 
     public Long getId() {
@@ -162,5 +167,23 @@ public class CoursePo extends BasePo {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+
+    public Integer getArea() {
+        return area;
+    }
+
+    public void setArea(Integer area) {
+        this.area = area;
+    }
+
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 }

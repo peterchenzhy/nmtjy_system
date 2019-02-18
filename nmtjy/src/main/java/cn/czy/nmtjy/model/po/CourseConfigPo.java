@@ -3,7 +3,9 @@ package cn.czy.nmtjy.model.po;
 public class CourseConfigPo extends BasePo {
     private Long id;
 
-    private Integer type;
+    private String type;
+
+    private String description;
 
     private String value;
 
@@ -17,11 +19,11 @@ public class CourseConfigPo extends BasePo {
         this.id = id;
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -39,5 +41,13 @@ public class CourseConfigPo extends BasePo {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
