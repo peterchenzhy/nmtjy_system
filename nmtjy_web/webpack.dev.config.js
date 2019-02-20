@@ -20,6 +20,7 @@ module.exports = merge(webpackBaseConfig, {
         proxy:{
             // '/wh/*':
             '/nmtjy-server/*':
+            // '/**':
             {
                 target: 'http://localhost:8080/',
                 secure: false  

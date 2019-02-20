@@ -6,13 +6,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @Author: PeterChen
@@ -35,8 +39,11 @@ public class LoginUserDetailService implements UserDetailsService {
         String password = po.getPassword();
 
         //获取权限点列表
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(username);
+        List<GrantedAuthority> authorities = new ArrayList();
+        authorities.add(authority);
 
-        return new User(username,password, Collections.emptyList());
+        return new User(username,password, authorities);
 
     }
 }
