@@ -3,11 +3,11 @@ import store from './store/store'
 import router from './router'
 
 // axios 配置
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 30000;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Authorization'] = 'bearer '+ localStorage.getItem("currentUser_token");
-// axios.defaults.baseURL = '/wh';
-axios.defaults.baseURL = '/';
+axios.defaults.baseURL = '/nmtjy-server/';
+// axios.defaults.baseURL = '/';
 
 // http request 拦截器
 /*axios.interceptors.request.use(

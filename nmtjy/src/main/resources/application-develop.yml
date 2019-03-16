@@ -3,6 +3,11 @@ spring:
     name: nmtjy-server
     profiles:
       active: develop
+  cache:
+    type: ehcache
+    ehcache:
+      config: classpath:ehcache.xml
+
   datasource:
     url: jdbc:mysql://localhost:3306/llsgzs?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true&allowMultiQueries=true
     type: com.alibaba.druid.pool.DruidDataSource
@@ -23,6 +28,7 @@ server:
       enabled: true
   servlet:
     context-path: /nmtjy-server
+  port: 8110
 
 #mybatis
 mybatis:

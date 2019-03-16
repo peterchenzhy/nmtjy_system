@@ -1,10 +1,14 @@
 package cn.czy.nmtjy.service.employee;
 
+import cn.czy.nmtjy.commons.NmtjyException;
+import cn.czy.nmtjy.commons.enums.StatusEnum;
 import cn.czy.nmtjy.mapper.EmployeeMapper;
 import cn.czy.nmtjy.model.po.EmployeePo;
+import cn.czy.nmtjy.model.req.EmployeeReq;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -32,4 +36,30 @@ public class EmployeeService {
         return this.employeeMapper.queryEmployeeByName( name);
     }
 
+    public List<EmployeePo> getAllEmployees() {
+        return this.employeeMapper.getAllEmployees();
+    }
+
+    public Boolean putEmployee(int loginUserId, EmployeeReq req) {
+        if(!req.getPassword().equals(req.getPasswordAgain())){
+            throw new NmtjyException("两次密码不一样。");
+        }
+
+        EmployeePo emp = this.queryEmployeeByName(req.getName());
+        if(emp!=null){
+            throw new NmtjyException("该用户已经存在。");
+        }
+        EmployeePo po = new EmployeePo();
+
+        po.setName(req.getName());
+        po.setTel(req.getTel());
+        po.setBirthday(req.getBirthday());
+        po.setRemark(req.getRemark());
+        po.setPassword(req.getPassword());
+        po.setStatus(StatusEnum.有效.getCode());
+        po.setCreator(loginUserId);
+        po.setOperator(loginUserId);
+
+        return this.employeeMapper.insertSelective(po)>0;
+    }
 }

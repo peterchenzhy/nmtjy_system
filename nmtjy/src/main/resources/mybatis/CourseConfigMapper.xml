@@ -13,4 +13,7 @@
     <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
     <result column="description" jdbcType="VARCHAR" property="description" />
   </resultMap>
+    <select id="getConfigByConfigType" resultMap="BaseResultMap">
+      select  * from course_config where status =1 and type =#{configType} order by id
+    </select>
 </mapper>

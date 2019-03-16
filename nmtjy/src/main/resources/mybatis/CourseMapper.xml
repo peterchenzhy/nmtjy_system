@@ -5,12 +5,14 @@
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="code" jdbcType="INTEGER" property="code"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="course_time" jdbcType="VARCHAR" property="courseTime"/>
         <result column="type" jdbcType="TINYINT" property="type"/>
         <result column="progress" jdbcType="TINYINT" property="progress"/>
         <result column="season" jdbcType="TINYINT" property="season"/>
         <result column="per_time" jdbcType="TINYINT" property="perTime"/>
         <result column="grade" jdbcType="TINYINT" property="grade"/>
         <result column="times" jdbcType="TINYINT" property="times"/>
+        <result column="shcool_type" jdbcType="TINYINT" property="schoolType"/>
         <result column="per_price" jdbcType="DECIMAL" property="perPrice"/>
         <result column="material_pay" jdbcType="DECIMAL" property="materialPay"/>
         <result column="other_pay" jdbcType="DECIMAL" property="otherPay"/>
@@ -29,13 +31,50 @@
     <sql id="Base_Column_List">
     id, code, name, type, progress, season, per_time, grade, times, per_price, material_pay, 
     other_pay, start_date, end_date, description, status, remark, creator, create_time, 
-    operator, operate_time
+    operator, operate_time ,school_type
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from course
-        where id = #{id,jdbcType=BIGINT} and status =1
+    </select>
+    <select id="queryCourses" parameterType="cn.czy.nmtjy.model.po.CoursePo" resultMap="BaseResultMap">
+        select * from course where status = 1
+        <if test="code != null">
+           and code = #{code}
+        </if>
+        <if test="name != null">
+            and name = #{name}
+        </if>
+        <if test="type != null">
+            and type = #{type}
+        </if>
+        <if test="progress != null">
+           and progress=#{progress}
+        </if>
+        <if test="season != null">
+            and season = #{season}
+        </if>
+        <if test="perTime != null">
+            and per_time = #{perTime}
+        </if>
+        <if test="grade != null">
+            and grade = #{grade}
+        </if>
+        <if test="schoolType != null">
+            and school_type = #{schoolType}
+        </if>
+
+        <if test="startDate != null">
+            <![CDATA[
+          and start_date >= #{startDate}
+            ]]>
+        </if>
+        <if test="endDate != null">
+            <![CDATA[
+           and  end_date <= #{endDate}  ]]>
+        </if>
+
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from course
@@ -48,7 +87,7 @@
       per_price, material_pay, other_pay, 
       start_date, end_date, description, 
       status, remark, creator, 
-      create_time, operator, operate_time
+      create_time, operator, operate_time,school_type
       )
     values (#{id,jdbcType=BIGINT}, #{code,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{type,jdbcType=TINYINT}, #{progress,jdbcType=TINYINT}, #{season,jdbcType=TINYINT}, 
@@ -56,7 +95,7 @@
       #{perPrice,jdbcType=DECIMAL}, #{materialPay,jdbcType=DECIMAL}, #{otherPay,jdbcType=DECIMAL}, 
       #{startDate,jdbcType=INTEGER}, #{endDate,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
       #{status,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, #{creator,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, #{operateTime,jdbcType=TIMESTAMP}
+      #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, #{operateTime,jdbcType=TIMESTAMP},#{schoolType}
       )
   </insert>
     <insert id="insertSelective" parameterType="cn.czy.nmtjy.model.po.CoursePo">
@@ -116,6 +155,9 @@
                 operator,
             </if>
             operate_time,
+            <if test="schoolType != null">
+                school_type,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="code != null">
@@ -172,6 +214,9 @@
                 #{operator,jdbcType=INTEGER},
             </if>
             now(),
+            <if test="schoolType != null">
+                #{schoolType}
+            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="cn.czy.nmtjy.model.po.CoursePo">
@@ -237,6 +282,9 @@
             <if test="operateTime != null">
                 operate_time = #{operateTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="schoolType != null">
+                school_type = #{schoolType,jdbcType=TIMESTAMP},
+            </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -261,7 +309,8 @@
       creator = #{creator,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       operator = #{operator,jdbcType=INTEGER},
-      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      school_type = #{schoolType}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

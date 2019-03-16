@@ -13,11 +13,12 @@
                 <li>
                     <Button type="primary" icon="plus-round" @click="openNewModal()">新建</Button>
                     <Button type="success" icon="wrench" @click="openModifyModal()">修改</Button>
-                    <Button type="error" icon="trash-a" @click="del()">删除</Button>
+                    <!--<Button type="error" icon="trash-a" @click="del()">删除</Button>-->
                 </li>
                 <li>
                     <div style="padding: 10px 0;">
-                    	<Table border :columns="columns1" :data="data1" :height="400" @on-selection-change="s=>{change(s)}" @on-row-dblclick="s=>{dblclick(s)}"></Table>
+                    	<Table border :columns="columns1" :data="data1" :height="400"
+                               @on-selection-change="s=>{change(s)}" @on-row-dblclick="s=>{dblclick(s)}"></Table>
                     </div> 
                 </li>
                 <li>
@@ -45,7 +46,7 @@
                 <Row>
                     <Col span="12">
                         <Form-item label="密码:" prop="password">
-                            <Input v-model="userNew.password" type="password" style="width: 204px"/>
+                        <Input v-model="userNew.password" type="password" style="width: 204px"/>
                         </Form-item>
                     </Col>
                     <Col span="12">
@@ -56,11 +57,19 @@
                 </Row>
                 <Row>
                     <Col span="12">
-                        <Form-item label="邮箱:" prop="email">
-                            <Input v-model="userNew.email" style="width: 204px"/>
+                        <Form-item label="电话:" prop="tell">
+                            <Input v-model="userNew.tel" type="password" style="width: 204px"/>
                         </Form-item>
                     </Col>
+
                 </Row>
+                <!--<Row>-->
+                    <!--<Col span="12">-->
+                        <!--<Form-item label="邮箱:" prop="email">-->
+                            <!--<Input v-model="userNew.email" style="width: 204px"/>-->
+                        <!--</Form-item>-->
+                    <!--</Col>-->
+                <!--</Row>-->
             </Form>
         </Modal>
         <!--修改modal-->  
@@ -85,16 +94,16 @@
                         </Form-item>
                     </Col>
                 </Row>
-                <Row>
-                    <Col span="12">
-                        <Form-item label="邮箱:" prop="email">
-                            <Input v-model="userModify.email" style="width: 204px"/>
-                        </Form-item>
-                    </Col>
-                </Row>
+                <!--<Row>-->
+                    <!--<Col span="12">-->
+                        <!--<Form-item label="邮箱:" prop="email">-->
+                            <!--<Input v-model="userModify.email" style="width: 204px"/>-->
+                        <!--</Form-item>-->
+                    <!--</Col>-->
+                <!--</Row>-->
             </Form>
         </Modal>
-        <!--配置角色modal-->  
+        <!--配置角色modal-->
         <Modal v-model="roleModal" width="500" title="角色配置" @on-ok="roleOk()" @on-cancel="cancel()">
             <div>
                 <Table border :columns="columns2" :data="data2" :height="260"  @on-selection-change="s=>{change2(s)}"></Table>
@@ -104,92 +113,97 @@
 </template>
 <script>
 	export default {
-        data () {
+        data: function () {
             return {
                 /*用于查找的登录名*/
-                loginName:null,
-            	/*选择的数量*/
-                count:null,
-            	/*选中的组数据*/
-                groupId:null,
-            	/*新建modal的显示参数*/
-                newModal:false,
+                loginName: null,
+                /*选择的数量*/
+                count: null,
+                /*选中的组数据*/
+                groupId: null,
+                /*新建modal的显示参数*/
+                newModal: false,
                 /*修改modal的显示参数*/
-                modifyModal:false,
+                modifyModal: false,
                 /*角色配置modal的显示参数*/
-                roleModal:false,
-            	/*分页total属性绑定值*/
-                total:0,
+                roleModal: false,
+                /*分页total属性绑定值*/
+                total: 0,
                 /*loading*/
                 loading: true,
                 /*pageInfo实体*/
-                pageInfo:{
-                	page:0,
-                	pageSize:10
+                pageInfo: {
+                    page: 0,
+                    pageSize: 10
                 },
                 /*user实体*/
-                user:{
-                    id:null,
-                    name:null,
-                    loginName:null,
-                    password:null,
-                    passwordAgain:null,
-                    email:null
+                user: {
+                    id: null,
+                    name: null,
+                    loginName: null,
+                    password: null,
+                    passwordAgain: null,
+                    email: null,
+                    tel: null
                 },
                 /*用于添加的user实体*/
-                userNew:{
-                	id:null,
-					name:null,
-					loginName:null,
-					password:null,
-                    passwordAgain:null,
-					email:null
+                userNew: {
+                    id: null,
+                    name: null,
+                    loginName: null,
+                    password: null,
+                    passwordAgain: null,
+                    email: null,
+                    tel: null
                 },
                 /*用于修改的user实体*/
-                userModify:{
-                	id:null,
-					name:null,
-					loginName:null,
-					password:null,
-					email:null
+                userModify: {
+                    id: null,
+                    name: null,
+                    loginName: null,
+                    password: null,
+                    email: null
                 },
                 /*新建验证*/
-                ruleNew:{
+                ruleNew: {
                     name: [
-                        { type:'string',required: true, message: '输入用户名', trigger: 'blur' }
+                        {type: 'string', required: true, message: '输入用户名', trigger: 'blur'}
                     ],
                     loginName: [
-                        { type:'string',required: true, message: '输入登录名', trigger: 'blur' }
+                        {type: 'string', required: true, message: '输入登录名', trigger: 'blur'}
                     ],
                     password: [
-                        { type:'string',required: true, message: '输入密码', trigger: 'blur' }
+                        {type: 'string', required: true, message: '输入密码', trigger: 'blur'}
                     ],
                     passwordAgain: [
-                        { type:'string',required: true, message: '输入再次密码', trigger: 'blur' }
+                        {type: 'string', required: true, message: '输入再次密码', trigger: 'blur'}
                     ],
                     email: [
-                        { required: true, message: '输入邮箱', trigger: 'blur' },
-                        { type:'email', message: '输入正确的邮箱格式', trigger: 'blur' }
+                        {required: true, message: '输入邮箱', trigger: 'blur'},
+                        {type: 'email', message: '输入正确的邮箱格式', trigger: 'blur'}
+                    ],
+                    tel: [
+                        {type: 'string', required: true, message: '请输入手机号', trigger: 'blur'}
                     ]
                 },
                 /*修改验证*/
-                ruleModify:{
+                ruleModify: {
                     name: [
-                        { type:'string',required: true, message: '输入用户名', trigger: 'blur' }
+                        {type: 'string', required: true, message: '输入用户名', trigger: 'blur'}
                     ],
                     loginName: [
-                        { type:'string',required: true, message: '输入登录名', trigger: 'blur' }
+                        {type: 'string', required: true, message: '输入登录名', trigger: 'blur'}
                     ],
                     password: [
-                        { type:'string',required: true, message: '输入密码', trigger: 'blur' }
+                        {type: 'string', required: true, message: '输入密码', trigger: 'blur'}
                     ],
                     email: [
-                        { required: true, message: '输入邮箱', trigger: 'blur' },
-                        { type:'email', message: '输入正确的邮箱格式', trigger: 'blur' }
+                        {required: true, message: '输入邮箱', trigger: 'blur'},
+                        {type: 'email', message: '输入正确的邮箱格式', trigger: 'blur'}
                     ]
                 },
-            	/*表显示字段*/
-            	columns1: [
+                /*表显示字段*/
+                columns1: [
                     {
                         type: 'selection',
                         width: 60,
@@ -197,18 +211,23 @@
                     },
                     {
                         title: '登录名',
-                        key: 'loginName'
+                        // key: 'loginName'
+                        key: 'name'
                     },
                     {
                         title: '用户名',
                         key: 'name'
                     },
+                    // {
+                    //     title: '邮箱',
+                    //     key: 'email'
+                    // },
                     {
-                        title: '邮箱',
-                        key: 'email'
+                        title: '电话',
+                        key: 'tel'
                     },
                     {
-                        title: '操作',
+                        title: '详情',
                         align: 'center',
                         key: 'action',
                         render: (h, params) => {
@@ -222,7 +241,7 @@
                                             this.relationSet(params.row);
                                         }
                                     }
-                                },'配置角色')
+                                }, '配置角色')
                             ]);
                         }
                     },
@@ -247,11 +266,11 @@
                     }
                 ],
                 /*表数据*/
-                data2:[],
+                data2: [],
                 /*data2的临时存储*/
-                data2Temp:[],
+                data2Temp: [],
                 /*用户与角色关系列表*/
-                relationList:null
+                relationList: null
             }
         },
         mounted(){
@@ -262,7 +281,8 @@
             });
             this.axios({
               method: 'get',
-              url: '/roles/all'
+              // url: '/roles/all'
+              url: '/test1'
             }).then(function (response) {
                 this.data2Temp = response.data;
             }.bind(this)).catch(function (error) {
@@ -291,6 +311,7 @@
                 this.userNew.password = null;
                 this.userNew.passwordAgain = null;
                 this.userNew.email = null;
+                this.userNew.tel = null;
             },
             /*userModify实体初始化*/
             initUserModify(){
@@ -307,6 +328,8 @@
                 this.user.loginName = e.loginName;
                 this.user.password = e.password;
                 this.user.email = e.email;
+                this.user.passwordAgain=e.passwordAgain;
+                this.user.tel = e.tel;
             },
             /*userNew设置*/
             userNewSet(e){
@@ -329,15 +352,16 @@
             getTable(e) {
                 this.axios({
                   method: 'get',
-                  url: '/users',
+                  // url: '/users',
+                  url: '/employee/list',
                   params: {
-                    'page':e.pageInfo.page,
-                    'pageSize':e.pageInfo.pageSize,
-                    'loginName':e.loginName
+                    // 'page':e.pageInfo.page,
+                    // 'pageSize':e.pageInfo.pageSize,
+                    // 'loginName':e.loginName
                   }
                 }).then(function (response) {
-                    this.data1=response.data.data;
-                    this.total=response.data.totalCount;
+                    this.data1=response.data;
+                    // this.total=response.data.totalCount;
                 }.bind(this)).catch(function (error) {
                   alert(error);
                 });
@@ -348,12 +372,12 @@
                 this.getTable({
                     "pageInfo":this.pageInfo,
                     "loginName":this.loginName
-                });   
+                });
             },
             /*分页点击事件*/
             pageSearch(e){
                 this.pageInfo.page = e-1;
-                this.getTable({  
+                this.getTable({
                     "pageInfo":this.pageInfo,
                     "loginName":this.loginName
                 });
@@ -367,15 +391,17 @@
                 this.groupId = null;
             },
             /*新建modal的newOk点击事件*/
-            newOk (userNew) { 
+            newOk (userNew) {
                 this.$refs[userNew].validate((valid) => {
                     if (valid) {
                         if(this.userNew.password == this.userNew.passwordAgain){
                             this.initUser();
                             this.userSet(this.userNew);
                             this.axios({
-                                method: 'post',
-                                url: '/users/user',
+                                // method: 'post',
+                                // url: '/users/user',
+                                method: 'put',
+                                url: '/employee',
                                 data: this.user
                             }).then(function (response) {
                                 this.initUserNew();
@@ -386,7 +412,7 @@
                                 this.$Message.info('新建成功');
                             }.bind(this)).catch(function (error) {
                                 alert(error);
-                            });  
+                            });
                             this.newModal = false;
                         }else{
                             this.$Message.error('两次输入的密码不相同！');
@@ -409,14 +435,14 @@
             /*点击修改时判断是否只选择一个*/
             openModifyModal(){
                 if(this.count > 1 || this.count < 1){
-                    this.modifyModal= false; 
-                    this.$Message.warning('请至少选择一项(且只能选择一项)');  
+                    this.modifyModal= false;
+                    this.$Message.warning('请至少选择一项(且只能选择一项)');
                 }else{
                     this.modifyModal = true;
                 }
             },
             /*修改modal的modifyOk点击事件*/
-             modifyOk (userModify) { 
+             modifyOk (userModify) {
                 this.$refs[userModify].validate((valid) => {
                     if (valid) {
                         this.initUser();
@@ -434,7 +460,7 @@
                             this.$Message.info('修改成功');
                         }.bind(this)).catch(function (error) {
                           alert(error);
-                        });  
+                        });
                         this.modifyModal = false;
                     }else {
                         this.$Message.error('表单验证失败!');
@@ -456,7 +482,7 @@
                 if(e.length==1){
                     this.userModifySet(e['0']);
                 }
-                this.setGroupId(e);              
+                this.setGroupId(e);
             },
             /*通过选中的行设置groupId的值*/
             setGroupId(e){
@@ -489,7 +515,7 @@
             /*表格中双击事件*/
             dblclick(e){
                 this.userModifySet(e);
-                this.modifyModal = true;
+                this.modifyModatrue;
                 this.data1.sort();
             },
             /*流程配置*/
@@ -522,7 +548,7 @@
                                 "_checked": true
                             });
                         }
-                    }   
+                    }
                 }.bind(this)).catch(function (error) {
                   alert(error);
                 });
@@ -535,7 +561,7 @@
                       url: '/relations',
                       data: this.relationList
                     }).then(function (response) {
-                        this.$Message.info('配置成功'); 
+                        this.$Message.info('配置成功');
                     }.bind(this)).catch(function (error) {
                       alert(error);
                     });

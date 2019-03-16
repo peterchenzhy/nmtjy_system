@@ -11,6 +11,7 @@ public class NmtjyException extends RuntimeException{
 
     private HttpStatus httpStatus;
     private String msg;
+
     public NmtjyException(String msg){
         this.msg = msg ;
         this.httpStatus = HttpStatus.BAD_REQUEST;

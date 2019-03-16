@@ -1,7 +1,14 @@
 package cn.czy.nmtjy.controller;
 
+import cn.czy.nmtjy.commons.Consts;
+import cn.czy.nmtjy.service.cache.EcacheUtils;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.ehcache.CacheManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * @Author: PeterChen
@@ -9,10 +16,24 @@ import org.springframework.web.bind.annotation.RestController;
  * @Version 1.0
  */
 @RestController
-public class TestController extends BaseController {
+@Slf4j
+public class TestController {
 
-    @RequestMapping("/test1")
+    @Autowired
+    private CacheManager cacheManager;
+
+    @RequestMapping("/test")
     public String test1(){
-        return "hello";
+        return "hello this is test1 ";
+    }
+
+    @RequestMapping("/test/cache")
+    public String test2() {
+        Map<String,String > map  = (Map<String,String >)EcacheUtils.getCache(cacheManager, Consts.COURSE_PROGRESS);
+        map.forEach((k,v)->{
+            log.warn(v);
+        });
+
+        return "hello this is test2 ";
     }
 }

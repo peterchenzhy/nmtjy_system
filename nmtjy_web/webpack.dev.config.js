@@ -22,7 +22,7 @@ module.exports = merge(webpackBaseConfig, {
             '/nmtjy-server/*':
             // '/**':
             {
-                target: 'http://localhost:8080/',
+                target: 'http://localhost:8110/',
                 secure: false  
             }
         },

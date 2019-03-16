@@ -1,8 +1,12 @@
 package cn.czy.nmtjy.controller;
 
+import cn.czy.nmtjy.model.req.PaymentReq;
+import cn.czy.nmtjy.model.req.StudentReq;
 import cn.czy.nmtjy.service.course.CourseRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * @Author: PeterChen
@@ -10,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  */
 @RestController
-public class CourseRegistrationController extends BaseController {
+public class CourseRegistrationController  {
     @Autowired
     private CourseRegistrationService courseRegistrationService;
 
@@ -19,7 +23,8 @@ public class CourseRegistrationController extends BaseController {
                                 @PathVariable("courseId") Long courseId,
                                 @RequestParam("studentId") Long studentId,
                                 @RequestParam("times") Integer times,
-                                @RequestParam(value = "payStatus", required = false, defaultValue = "0") Integer payStatus) {
+                                @RequestParam(value = "payStatus", required = false, defaultValue = "0") Integer payStatus,
+                                @RequestBody(required = false) @Valid PaymentReq paymentReq) {
         return this.courseRegistrationService.courseRegister(loginUserId,courseId,studentId,times,payStatus);
     }
 }

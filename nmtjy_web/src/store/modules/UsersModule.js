@@ -27,17 +27,16 @@ export default {
         }
     },
     actions: {
-        userLogin(context, {user_name, user_password, router}) {
+        userLogin: function (context, {user_name, user_password, router}) {
             axios({
-                // method: 'post',
+                method: 'post',
                 // url: '/oauth/token',
-                method: 'get',
-                url: '/nmtjy-server/',
+                url: '/login',
                 params: {
-                    // 'username': user_name,
-                    // 'password': user_password,
-                    // 'grant_type': 'password',
-                    // 'scope': 'all'
+                    'username': user_name,
+                    'password': user_password,
+                    'grant_type': 'password',
+                    'scope': 'all'
                 },
                 auth: {
                     username: 'client',
@@ -51,7 +50,12 @@ export default {
                     'refresh_token': response.data.refresh_token
                 });
                 /*router.push({path:'base'});*/
-                axios.defaults.headers.common['Authorization'] = 'bearer ' + localStorage.getItem('currentUser_token');
+                // axios.defaults.headers.common['Authorization'] = 'bearer ' + localStorage.getItem('currentUser_token');
+                localStorage.setItem('nmtjy-token', response.headers['nmtjy-token']);
+                localStorage.setItem('x-login-userid', response.headers['x-login-userid']);
+                axios.defaults.headers.common['nmtjy-token'] = localStorage.getItem('nmtjy-token');
+                axios.defaults.headers.common['x-login-userid'] = localStorage.getItem('x-login-userid');
+
                 router.push({path: 'base/welcome'});
                 context.commit('setSignFalse', null, {root: true});
                 /*this.$route.router.push({ path: '/base' });*/

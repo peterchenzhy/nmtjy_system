@@ -1,7 +1,10 @@
 package cn.czy.nmtjy.mapper;
 
 import cn.czy.nmtjy.model.po.CoursePo;
+import cn.czy.nmtjy.model.req.CourseSearchReq;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface CourseMapper {
@@ -16,4 +19,6 @@ public interface CourseMapper {
     int updateByPrimaryKeySelective(CoursePo record);
 
     int updateByPrimaryKey(CoursePo record);
+
+    List<CoursePo> queryCourses(CourseSearchReq po);
 }

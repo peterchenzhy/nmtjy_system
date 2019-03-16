@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Version 1.0
  */
 @RestController
-public class LoginController extends BaseController {
+public class LoginController  {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {

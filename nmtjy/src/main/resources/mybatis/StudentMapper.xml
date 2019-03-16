@@ -29,7 +29,10 @@
 
 
     <select id="queryStudentByName" resultMap="BaseResultMap">
-      select * from student where name = #{name} and status =1 ;
+      select * from student where name = #{name} and status =1
+    </select>
+    <select id="queryStudent" resultMap="BaseResultMap">
+        select * from student where status = 1
     </select>
 
 

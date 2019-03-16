@@ -4,12 +4,16 @@ import cn.czy.nmtjy.commons.NmtjyException;
 import cn.czy.nmtjy.mapper.CourseMapper;
 import cn.czy.nmtjy.model.po.CoursePo;
 import cn.czy.nmtjy.model.req.CourseReq;
+import cn.czy.nmtjy.model.req.CourseSearchReq;
+import cn.czy.nmtjy.model.vo.CourseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -78,6 +82,22 @@ public class CourseManagerService {
             log.error("插入课程信息，课程结束日期不能为空");
             throw new NmtjyException("插入课程信息，课程结束日期不能为空");
         }
+    }
+
+    public List<CoursePo> getCourse( CourseSearchReq req) {
+        return this.courseMapper.queryCourses(req);
+    }
+
+    public List<CourseVo> getAllCourses() {
+        List<CoursePo> poList = this.getCourse(null);
+        List<CourseVo> voList= new ArrayList<>(poList.size());
+        return voList;
+    }
+
+    private CourseVo po2vo (CoursePo po ){
+        CourseVo vo = new CourseVo();
+        BeanUtils.copyProperties(po,vo);
+        return vo ;
     }
 
 }

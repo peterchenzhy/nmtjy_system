@@ -4,9 +4,11 @@ import cn.czy.nmtjy.commons.enums.PayStatusEnum;
 import cn.czy.nmtjy.commons.NmtjyException;
 import cn.czy.nmtjy.mapper.CourseRegistrationMapper;
 import cn.czy.nmtjy.model.po.CourseRegistrationPo;
+import cn.czy.nmtjy.service.payment.PaymentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -22,7 +24,10 @@ import java.util.Objects;
 public class CourseRegistrationService {
     @Autowired
     private CourseRegistrationMapper courseRegistrationMapper;
+    @Autowired
+    private PaymentService paymentService;
 
+    @Transactional
     public boolean courseRegister(Integer loginUserId,Long courseId, Long studentId, Integer times, Integer payStatus) {
         if (Objects.isNull(courseId)) {
             log.error("课程id courseID 不能为空");
@@ -48,7 +53,7 @@ public class CourseRegistrationService {
         po.setCreator(loginUserId);
         po.setOperator(loginUserId);
 
-        return  this.courseRegistrationMapper.insertSelective(po)>0;
+        return  this.courseRegistrationMapper.insertSelective(po)>0 ;
     }
 
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @Author: PeterChen
@@ -30,7 +31,12 @@ public class CourseReq implements Serializable {
     @NotNull(message = "课程季节类型不能为空")
     private Integer season;
     @NotNull(message = "课程每节课时间不能为空")
-    private String perTime;
+    private Integer perTime;
+
+    private Integer year;
+    private Integer area;
+    private Integer schoolType;
+    private String courseTime;
 
     private Integer grade; //目标年级
 
@@ -44,9 +50,9 @@ public class CourseReq implements Serializable {
     private BigDecimal otherPay; //其他费用
 
     @NotNull(message = "课程开始时间不能为空")
-    private Integer start_date;
+    private Date startDate;
     @NotNull(message = "课程结束时间不能为空")
-    private Integer end_date;
+    private Date endDate;
 
     private String description;//课程描述
     private String remark;//备注
