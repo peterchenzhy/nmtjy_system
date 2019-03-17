@@ -16,6 +16,8 @@ public interface Consts {
     String HTTP_HEADER_BEARER = "Bearer ";
     String LONGIN_USER = "x-login-userid";
 
+    String DATE_FORMAT = "yyyy-MM-dd";
+
 
     String ZERO_STRING = "0";
 

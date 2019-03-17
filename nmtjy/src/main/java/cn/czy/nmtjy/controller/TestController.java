@@ -1,7 +1,7 @@
 package cn.czy.nmtjy.controller;
 
 import cn.czy.nmtjy.commons.Consts;
-import cn.czy.nmtjy.service.cache.EcacheUtils;
+import cn.czy.nmtjy.service.cache.EhcacheUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.ehcache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +29,14 @@ public class TestController {
 
     @RequestMapping("/test/cache")
     public String test2() {
-        Map<String,String > map  = (Map<String,String >)EcacheUtils.getCache(cacheManager, Consts.COURSE_PROGRESS);
+        Map<String,String > map  = (Map<String,String >) EhcacheUtils.getCache(cacheManager, Consts.COURSE_PROGRESS);
         map.forEach((k,v)->{
+            log.warn(k);
             log.warn(v);
         });
+
+        Integer a = 1 ;
+        log.warn(map.get(a));
 
         return "hello this is test2 ";
     }

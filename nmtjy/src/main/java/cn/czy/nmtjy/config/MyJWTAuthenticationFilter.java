@@ -37,6 +37,7 @@ public class MyJWTAuthenticationFilter extends BasicAuthenticationFilter {
         }
         UsernamePasswordAuthenticationToken authenticationToken = this.checkUsernamePasswordAuthenticationToken(token);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
         //进入下一个filter
         chain.doFilter(request,response);
     }

@@ -8,22 +8,22 @@
             maxElementsInMemory="10000"
             eternal="false"
             overflowToDisk="true"
-            timeToIdleSeconds="10"
-            timeToLiveSeconds="20"
+            timeToIdleSeconds="600"
+            timeToLiveSeconds="600"
             diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"/>
 
     <cache name="nmyjy.config.cache:10h"
            maxElementsInMemory="100000"
-           eternal="false"
+           eternal="true"
            overflowToDisk="false"
-           timeToIdleSeconds="10"
-           timeToLiveSeconds="36000"/>
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="0"/>
 
     <cache name="nmyjy:cache:30m"
-           maxElementsInMemory="100000"
+           maxElementsInMemory="1000"
            eternal="false"
            overflowToDisk="false"
-           timeToIdleSeconds="10"
+           timeToIdleSeconds="1800"
            timeToLiveSeconds="1800"/>
 </ehcache>

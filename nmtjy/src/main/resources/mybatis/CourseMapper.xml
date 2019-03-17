@@ -6,13 +6,13 @@
         <result column="code" jdbcType="INTEGER" property="code"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="course_time" jdbcType="VARCHAR" property="courseTime"/>
-        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
         <result column="progress" jdbcType="TINYINT" property="progress"/>
         <result column="season" jdbcType="TINYINT" property="season"/>
         <result column="per_time" jdbcType="TINYINT" property="perTime"/>
         <result column="grade" jdbcType="TINYINT" property="grade"/>
         <result column="times" jdbcType="TINYINT" property="times"/>
-        <result column="shcool_type" jdbcType="TINYINT" property="schoolType"/>
+        <result column="school_type" jdbcType="INTEGER" property="schoolType"/>
         <result column="per_price" jdbcType="DECIMAL" property="perPrice"/>
         <result column="material_pay" jdbcType="DECIMAL" property="materialPay"/>
         <result column="other_pay" jdbcType="DECIMAL" property="otherPay"/>
@@ -158,6 +158,15 @@
             <if test="schoolType != null">
                 school_type,
             </if>
+            <if test="area != null">
+                area,
+            </if>
+            <if test="year != null">
+                year,
+            </if>
+            <if test="courseTime != null">
+                course_time,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="code != null">
@@ -215,7 +224,17 @@
             </if>
             now(),
             <if test="schoolType != null">
-                #{schoolType}
+                #{schoolType},
+            </if>
+
+            <if test="area != null">
+                #{area},
+            </if>
+            <if test="year != null">
+                #{year},
+            </if>
+            <if test="courseTime != null">
+                #{courseTime},
             </if>
         </trim>
     </insert>

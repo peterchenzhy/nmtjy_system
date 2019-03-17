@@ -364,7 +364,7 @@
                     },
                     {
                         title: '校区',
-                        key: 'area'
+                        key: 'areaDescription'
                     },
                     {
                         title: '年度',
@@ -372,7 +372,7 @@
                     },
                     {
                         title: '进度',
-                        key: 'progress'
+                        key: 'progressDescription'
                     },
 
                     {
@@ -407,17 +407,18 @@
                     {
                         title: '课程类型',
                         width: 100,
-                        key: 'type'
+                        key: 'typeDescription'
+                        // key: 'type'
                     },
                     {
                         title: '课程进度',
                         width: 100,
-                        key: 'progress'
+                        key: 'progressDescription'
                     },
                     {
                         title: '课程季节',
                         width: 100,
-                        key: 'season'
+                        key: 'seasonDescription'
                     },
                     {
                         title: '目标年级',
@@ -447,12 +448,12 @@
                     {
                         title: '开始日期',
                         width: 100,
-                        key: 'startDate'
+                        key: 'startDateDescription'
                     },
                     {
                         title: '结束日期',
                         width: 100,
-                        key: 'endDate'
+                        key: 'endDateDescription'
                     },
                     {
                         title: '其他费用',
@@ -494,7 +495,7 @@
             this.axios({
                 method: 'get',
                 // url: '/roles/all'
-                url: '/test1'
+                url: '/test'
             }).then(function (response) {
                 this.data2Temp = response.data;
             }.bind(this)).catch(function (error) {
@@ -601,7 +602,7 @@
                     }
                 }).then(function (response) {
                     this.data1 = response.data;
-                    // this.total=response.data.totalCount;
+                    this.total=response.data.totalCount;
                 }.bind(this)).catch(function (error) {
                     alert(error);
                 });
