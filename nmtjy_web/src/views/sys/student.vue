@@ -33,146 +33,57 @@
         </div>
         <!--添加modal-->
         <Modal :mask-closable="false" :visible.sync="newModal" :loading="loading" v-model="newModal" width="600"
-               title="新建" @on-ok="newOk('newCourse')" @on-cancel="cancel()">
-            <!--<Form ref="newCourse" :model="newCourse" :rules="ruleNew" :label-width="80">-->
-            <Form ref="newCourse" :model="newCourse" :label-width="80">
+               title="新建" @on-ok="newOk('newStudent')" @on-cancel="cancel()">
+            <Form ref="newStudent" :model="newStudent" :label-width="80">
                 <Row>
                     <Col span="12">
-                        <Form-item label="课程名称:" prop="name">
-                            <Input v-model="newCourse.name" style="width: 200px"/>
+                        <Form-item label="姓名:" prop="name">
+                            <Input v-model="newStudent.name" style="width: 200px"/>
                         </Form-item>
                     </Col>
                     <Col span="12">
-                        <Form-item label="年度:" prop="year">
-                            <Input v-model="newCourse.year" style="width: 200px"/>
+                        <Form-item label="年级:" prop="grade">
+                            <Input v-model="newStudent.grade" style="width: 200px"/>
                         </Form-item>
                     </Col>
                 </Row>
                 <Row>
                     <Col span="12">
-                        <Form-item label="季节班次:">
-                            <!--<Select :label-in-value= "true" v-model="configSelect" style="width:200px" @on-change = "e=>{selectSeason(e)}">-->
-                            <Select :label-in-value="true" v-model="selectSeason" style="width:200px"
-                                    @on-change="e=>{newCourse.season=e.value}">
-                                <Option v-for="item in dataCourseSeason" :value="item.value" :key="item.value">
-                                    {{ item.description }}
-                                </Option>
-                            </Select>
+                        <Form-item label="小学:" prop="elementarySchool">
+                            <Input v-model="newStudent.elementarySchool" style="width: 200px"/>
                         </Form-item>
                     </Col>
                     <Col span="12">
-                        <Form-item label="课程类型:">
-                            <Select :label-in-value="true" v-model="selectType" style="width:200px"
-                                    @on-change="e=>{this.newCourse.type=e.value}">
-                                <Option v-for="item in dataCourseType" :value="item.value" :key="item.value">
-                                    {{ item.description }}
-                                </Option>
-                            </Select>
+                        <Form-item label="中学:" prop="middleSchool">
+                            <Input v-model="newStudent.middleSchool" style="width: 200px"/>
                         </Form-item>
                     </Col>
                 </Row>
                 <Row>
                     <Col span="12">
-                        <Form-item label="所在校区:">
-                            <!--<Select :label-in-value= "true" v-model="configSelect" style="width:200px" @on-change = "e=>{selectSeason(e)}">-->
-                            <Select :label-in-value="true" v-model="selectArea" style="width:200px"
-                                    @on-change="e=>{this.newCourse.area=e.value}">
-                                <Option v-for="item in dataCourseArea" :value="item.value" :key="item.value">
-                                    {{ item.description }}
-                                </Option>
-                            </Select>
+                        <Form-item label="高中:" prop="highSchool">
+                            <Input v-model="newStudent.highSchool" style="width: 200px"/>
                         </Form-item>
                     </Col>
                     <Col span="12">
-                        <Form-item label="学校类型:">
-                            <Select :label-in-value="true" v-model="selectSchoolType" style="width:200px"
-                                    @on-change="e=>{this.newCourse.schoolType=e.value}">
-                                <Option v-for="item in dataCourseSchoolType" :value="item.value" :key="item.value">
-                                    {{ item.description }}
-                                </Option>
-                            </Select>
-                        </Form-item>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col span="12">
-                        <Form-item label="课程进度:">
-                            <!--<Select :label-in-value= "true" v-model="configSelect" style="width:200px" @on-change = "e=>{selectSeason(e)}">-->
-                            <Select :label-in-value="true" v-model="selectProgress" style="width:200px"
-                                    @on-change="e=>{newCourse.progress=e.value}">
-                                <Option v-for="item in dataCourseProgress" :value="item.value" :key="item.value">
-                                    {{ item.description }}
-                                </Option>
-                            </Select>
-                        </Form-item>
-                    </Col>
-                    <Col span="12">
-
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span="12">
-                        <Form-item label="上课时间:" prop="courseTime">
-                            <Input v-model="newCourse.courseTime" style="width: 200px"/>
-                        </Form-item>
-                    </Col>
-                    <Col span="12">
-                        <Form-item label="每节课时间:" prop="perTime">
-                            <Input v-model="newCourse.perTime" style="width: 200px"/>
+                        <Form-item label="生日:" prop="birthday">
+                            <Input v-model="newStudent.birthday " style="width: 200px"/>
                         </Form-item>
                     </Col>
                 </Row>
                 <Row>
                     <Col span="12">
-                        <Form-item label="目标人群:" prop="targetGroup">
-                            <Input v-model="newCourse.targetGroup" type="text" style="width: 200px"/>
-                        </Form-item>
-                    </Col>
-                    <Col span="12">
-                        <Form-item label="课程次数:" prop="times">
-                            <Input v-model="newCourse.times" type="text" style="width: 200px"/>
+                        <Form-item label="备注:" prop="remark">
+                            <Input v-model="newStudent.remark" style="width: 200px"/>
                         </Form-item>
                     </Col>
                 </Row>
-                <Row>
-                    <Col span="12">
-                        <Form-item label="开课日期:" prop="startDate">
-                            <Input v-model="newCourse.startDate" type="date" style="width: 200px"/>
-                        </Form-item>
-                    </Col>
-                    <Col span="12">
-                        <Form-item label="结课日期:" prop="endDate">
-                            <Input v-model="newCourse.endDate" type="date" style="width: 200px"/>
-                        </Form-item>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span="12">
-                        <Form-item label="单课费用:" prop="startDate">
-                            <Input v-model="newCourse.perPrice" type="text" style="width: 200px"/>
-                        </Form-item>
-                    </Col>
-                    <Col span="12">
-                        <Form-item label="材料费:" prop="endDate">
-                            <Input v-model="newCourse.materialPay" type="text" style="width: 200px"/>
-                        </Form-item>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span="12">
-                        <Form-item label="课程描述:" prop="description">
-                            <Input v-model="newCourse.description" type="textarea" style="width: 450px"/>
-                        </Form-item>
-                    </Col>
-                </Row>
-
             </Form>
         </Modal>
         <!--修改modal-->
         <Modal :mask-closable="false" :visible.sync="modifyModal" :loading="loading" v-model="modifyModal" width="600"
                title="修改" @on-ok="modifyOk('userModify')" @on-cancel="cancel()">
-            <Form ref="userModify" :model="userModify" :rules="ruleModify" :label-width="80">
+            <Form ref="userModify" :model="userModify" :label-width="80">
                 <Row>
                     <Col span="12">
                         <Form-item label="登录名:" prop="loginName">
@@ -208,6 +119,25 @@
                        @on-selection-change="s=>{change2(s)}"></Table>
             </div>
         </Modal>
+        <!--报名modal-->
+        <Modal :mask-closable="false" :visible.sync="rigisterModal" :loading="loading" v-model="rigisterModal" width="600"
+               title="报名" @on-ok="newOk('newStudent')" @on-cancel="cancel()">
+            <Form ref="newStudent" :model="newStudent" :label-width="80">
+                <Row>
+                    <Col span="12">
+                        <Form-item label="姓名:" prop="name">
+                            <Input v-model="newStudent.name" style="width: 200px"/>
+                        </Form-item>
+                    </Col>
+                    <Col span="12">
+                        <Form-item label="年级:" prop="grade">
+                            <Input v-model="newStudent.grade" style="width: 200px"/>
+                        </Form-item>
+                    </Col>
+                </Row>
+            </Form>
+        </Modal>
+
     </div>
 </template>
 <script>
@@ -226,6 +156,7 @@
                 modifyModal: false,
                 /*详情页modal的显示参数*/
                 detailModal: false,
+                rigisterModal: false,
                 /*分页total属性绑定值*/
                 total: 0,
                 /*loading*/
@@ -235,118 +166,43 @@
                     page: 0,
                     pageSize: 10
                 },
-                /*course实体*/
-                course: {
+                student: {
                     id: null,
-                    code: null,
-                    year: null,
-                    area: null,
                     name: null,
-                    type: null,
-                    progress: null,
-                    courseTime: null,
-                    season: null,
-                    perTime: null,
-                    targetGroup: null,
+                    elementarySchool: null,
+                    middleSchool: null,
+                    highSchool: null,
+                    grade: null,
+                    remark: null,
+                    birthday: null
+                },
+                newStudent: {
+                    id: null,
+                    name: null,
+                    grade: null,
+                    birthday: null,
+                    elementarySchool: null,
+                    highSchool: null,
+                    middleSchool: null,
+                    remark: null
+                },
+                rigister: {
+                    courseId: null,
+                    studentId: null,
+                    payStatus: null,
                     times: null,
-                    schoolType: null,
-                    perPrice: null,
+                    remark: null
+                },
+                payment: {
+                    courseId: null,
+                    studentId: null,
+                    times: null,
+                    discount: null,
                     materialPay: null,
                     otherPay: null,
-                    startDate: null,
-                    endDate: null,
-                    description: null,
-                    status: null,
                     remark: null
-                },
-                /*course实体*/
-                newCourse: {
-                    id: null,
-                    code: null,
-                    year: null,
-                    area: null,
-                    name: null,
-                    type: null,
-                    progress: null,
-                    season: null,
-                    courseTime: null,
-                    perTime: null,
-                    targetGroup: null,
-                    times: null,
-                    schoolType: null,
-                    perPrice: null,
-                    materialPay: null,
-                    otherPay: null,
-                    startDate: null,
-                    endDate: null,
-                    description: null,
-                    status: null,
-                    remark: null
-                },
-                /*course实体*/
-                courseSeason: {
-                    id: null,
-                    type: null,
-                    value: null,
-                    description: null,
-                    remark: null
-                },
-                /*用于添加的user实体*/
-                userNew: {
-                    id: null,
-                    name: null,
-                    loginName: null,
-                    password: null,
-                    passwordAgain: null,
-                    email: null,
-                    tel: null
-                },
-                /*用于修改的user实体*/
-                userModify: {
-                    id: null,
-                    name: null,
-                    loginName: null,
-                    password: null,
-                    email: null
-                },
-                /*新建验证*/
-                ruleNew: {
-                    name: [
-                        {type: 'string', required: true, message: '输入用户名', trigger: 'blur'}
-                    ],
-                    loginName: [
-                        {type: 'string', required: true, message: '输入登录名', trigger: 'blur'}
-                    ],
-                    password: [
-                        {type: 'string', required: true, message: '输入密码', trigger: 'blur'}
-                    ],
-                    passwordAgain: [
-                        {type: 'string', required: true, message: '输入再次密码', trigger: 'blur'}
-                    ],
-                    email: [
-                        {required: true, message: '输入邮箱', trigger: 'blur'},
-                        {type: 'email', message: '输入正确的邮箱格式', trigger: 'blur'}
-                    ],
-                    tel: [
-                        {type: 'string', required: true, message: '请输入手机号', trigger: 'blur'}
-                    ]
-                },
-                /*修改验证*/
-                ruleModify: {
-                    name: [
-                        {type: 'string', required: true, message: '输入用户名', trigger: 'blur'}
-                    ],
-                    loginName: [
-                        {type: 'string', required: true, message: '输入登录名', trigger: 'blur'}
-                    ],
-                    password: [
-                        {type: 'string', required: true, message: '输入密码', trigger: 'blur'}
-                    ],
-                    email: [
-                        {required: true, message: '输入邮箱', trigger: 'blur'},
-                        {type: 'email', message: '输入正确的邮箱格式', trigger: 'blur'}
-                    ]
-                },
+                }
+                ,
                 /*表显示字段*/
                 columns1: [
                     {
@@ -355,24 +211,36 @@
                         align: 'center'
                     },
                     {
-                        title: '课程编码',
-                        key: 'code'
+                        title: 'id',
+                        key: 'id'
                     },
                     {
-                        title: '课程名称',
+                        title: '学生姓名',
                         key: 'name'
                     },
                     {
-                        title: '校区',
-                        key: 'areaDescription'
+                        title: '年级',
+                        key: 'grade'
                     },
                     {
-                        title: '年度',
-                        key: 'year'
+                        title: '小学',
+                        key: 'elementarySchool'
                     },
                     {
-                        title: '进度',
-                        key: 'progressDescription'
+                        title: '中学',
+                        key: 'middleSchool'
+                    },
+                    {
+                        title: '高中',
+                        key: 'highSchool'
+                    },
+                    {
+                        title: '生日',
+                        key: 'birthday'
+                    },
+                    {
+                        title: '其他',
+                        key: 'remark'
                     },
 
                     {
@@ -387,10 +255,10 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.details(params.row);
+                                            this.rigister(params.row);
                                         }
                                     }
-                                }, '详情')
+                                }, '报名')
                             ]);
                         }
                     },
@@ -409,76 +277,18 @@
                         width: 100,
                         key: 'typeDescription'
                         // key: 'type'
-                    },
-                    {
-                        title: '课程进度',
-                        width: 100,
-                        key: 'progressDescription'
-                    },
-                    {
-                        title: '课程季节',
-                        width: 100,
-                        key: 'seasonDescription'
-                    },
-                    {
-                        title: '目标年级',
-                        width: 100,
-                        key: 'targetGroup'
-                    },
-                    {
-                        title: '上课时间',
-                        width: 100,
-                        key: 'courseTime'
-                    },
-                    {
-                        title: '单课时间',
-                        width: 100,
-                        key: 'perTime'
-                    },
-                    {
-                        title: '单课费用',
-                        width: 100,
-                        key: 'perPrice'
-                    },
-                    {
-                        title: '材料费',
-                        width: 80,
-                        key: 'materialPay'
-                    },
-                    {
-                        title: '开始日期',
-                        width: 100,
-                        key: 'startDateDescription'
-                    },
-                    {
-                        title: '结束日期',
-                        width: 100,
-                        key: 'endDateDescription'
-                    },
-                    {
-                        title: '其他费用',
-                        width: 100,
-                        key: 'otherPay'
                     }
                 ],
-                dataCourseConfigTemp: [],
-                dataCourseSeason: [],
-                dataCourseArea: [],
-                dataCourseType: [],
-                dataCourseSchoolType: [],
-                dataCourseProgress: [],
                 /*表数据*/
                 data2: [],
+                userModify: {
+                    id: null,
+                    name: null,
+                    loginName: null,
+                    password: null,
+                    email: null
+                }
                 /*data2的临时存储*/
-                data2Temp: [],
-                configSelect: '',
-                selectSeason: '',
-                selectArea: '',
-                selectSchoolType: '',
-                selectType: '',
-                selectProgress: '',
-                /*用户与角色关系列表*/
-                relationList: null
             }
         },
         mounted() {
@@ -508,93 +318,22 @@
                 this.pageInfo.page = 0;
                 this.pageInfo.pageSize = 10;
             },
-            /*user实体初始化*/
-            initUser() {
-                this.user.id = null;
-                this.user.name = null;
-                this.user.loginName = null;
-                this.user.password = null;
-                this.user.email = null;
-            },
-            /*userNew实体初始化*/
-            initNewCourse() {
-                this.newCourse.id = null;
-                this.newCourse.code = null;
-                this.newCourse.year = null;
-                this.newCourse.area = null;
-                this.newCourse.name = null;
-                this.newCourse.type = null;
-                this.newCourse.progress = null;
-                this.newCourse.season = null;
-                this.newCourse.perTime = null;
-                this.newCourse.courseTime = null;
-                this.newCourse.targetGroup = null;
-                this.newCourse.times = null;
-                this.newCourse.perPrice = null;
-                this.newCourse.materialPay = null;
-                this.newCourse.otherPay = null;
-                this.newCourse.startDate = null;
-                this.newCourse.endDate = null;
-                this.newCourse.description = null;
-                this.newCourse.remark = null;
-            },
-            initSelect() {
-                this.selectSeason = '';
-                this.selectArea = '';
-                this.selectSchoolType = '';
-                this.selectType = '';
-                this.selectProgress = '';
-            },
-            initUserNew() {
-                this.userNew.id = null;
-                this.userNew.name = null;
-                this.userNew.loginName = null;
-                this.userNew.password = null;
-                this.userNew.passwordAgain = null;
-                this.userNew.email = null;
-                this.userNew.tel = null;
-            },
-            /*userModify实体初始化*/
-            initUserModify() {
-                this.userModify.id = null;
-                this.userModify.name = null;
-                this.userModify.loginName = null;
-                this.userModify.password = null;
-                this.userModify.email = null;
-            },
-            /*userNew设置*/
-            userSet(e) {
-                this.user.id = e.id;
-                this.user.name = e.name;
-                this.user.loginName = e.loginName;
-                this.user.password = e.password;
-                this.user.email = e.email;
-                this.user.passwordAgain = e.passwordAgain;
-                this.user.tel = e.tel;
-            },
-            /*userNew设置*/
-            userNewSet(e) {
-                this.userNew.id = e.id;
-                this.userNew.name = e.name;
-                this.userNew.loginName = e.loginName;
-                this.userNew.password = e.password;
-                this.userNew.passwordAgain = e.password;
-                this.userNew.email = e.email;
-            },
-            /*userModify设置*/
-            userModifySet(e) {
-                this.userModify.id = e.id;
-                this.userModify.name = e.name;
-                this.userModify.loginName = e.loginName;
-                this.userModify.password = e.password;
-                this.userModify.email = e.email;
+            initNewStudent() {
+                this.newStudent.id = null;
+                this.newStudent.birthday = null;
+                this.newStudent.name = null;
+                this.newStudent.elementarySchool = null;
+                this.newStudent.middleSchool = null;
+                this.newStudent.highSchool = null;
+                this.newStudent.grade = null;
+                this.newStudent.remark = null;
             },
             /*得到表数据*/
             getTable(e) {
                 this.axios({
                     method: 'get',
                     // url: '/users',
-                    url: '/courseManager/course',
+                    url: '/student/list',
                     params: {
                         // 'page':e.pageInfo.page,
                         // 'pageSize':e.pageInfo.pageSize,
@@ -705,26 +444,23 @@
             /*新建点击触发事件*/
             openNewModal() {
                 this.newModal = true;
-                // this.initUserNew();
-                this.initNewCourse();
-                // this.data1.sort();
+                this.initNewStudent();
                 this.count = 0;
                 this.groupId = null;
             },
             /*新建modal的newOk点击事件*/
-            newOk(newCourse) {
-                this.$refs[newCourse].validate((valid) => {
+            newOk(newStudent) {
+                this.$refs[newStudent].validate((valid) => {
                     if (valid) {
                         // this.initUser();
                         // this.userSet(this.userNew);
-                        console.log(this.newCourse);
                         this.axios({
-                            method: 'put',
-                            url: '/courseManager/course',
-                            data: this.newCourse
+                            method: 'post',
+                            url: '/student/create',
+                            data: this.newStudent
                         }).then(function (response) {
                             // this.initUserNew();
-                            this.initNewCourse();
+                            this.initNewStudent();
                             this.getTable({
                                 "pageInfo": this.pageInfo,
                                 "loginName": this.loginName
@@ -867,8 +603,8 @@
                 // });
             },
             /*点击详情*/
-            details(e) {
-                this.detailModal = true;
+            rigister(e) {
+                this.rigisterModal = true;
                 this.data2 = [e];
             },
             /*详情modal确认按钮点击事件*/

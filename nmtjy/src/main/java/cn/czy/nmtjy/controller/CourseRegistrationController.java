@@ -1,5 +1,6 @@
 package cn.czy.nmtjy.controller;
 
+import cn.czy.nmtjy.commons.Consts;
 import cn.czy.nmtjy.model.req.PaymentReq;
 import cn.czy.nmtjy.model.req.StudentReq;
 import cn.czy.nmtjy.service.course.CourseRegistrationService;
@@ -19,12 +20,10 @@ public class CourseRegistrationController  {
     private CourseRegistrationService courseRegistrationService;
 
     @RequestMapping(value = "/course/register/{courseId}", method = RequestMethod.POST)
-    public boolean createCourse(@RequestHeader("login-userId") Integer loginUserId,
+    public boolean createCourse(@RequestHeader(Consts.LONGIN_USER) Integer loginUserId,
                                 @PathVariable("courseId") Long courseId,
                                 @RequestParam("studentId") Long studentId,
-                                @RequestParam("times") Integer times,
-                                @RequestParam(value = "payStatus", required = false, defaultValue = "0") Integer payStatus,
-                                @RequestBody(required = false) @Valid PaymentReq paymentReq) {
-        return this.courseRegistrationService.courseRegister(loginUserId,courseId,studentId,times,payStatus);
+                                @RequestParam("times") Integer times){
+        return this.courseRegistrationService.courseRegister(loginUserId,courseId,studentId,times);
     }
 }

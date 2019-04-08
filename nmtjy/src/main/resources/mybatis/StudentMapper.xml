@@ -8,7 +8,7 @@
         <result column="elementary_school" jdbcType="VARCHAR" property="elementarySchool"/>
         <result column="middle_school" jdbcType="VARCHAR" property="middleSchool"/>
         <result column="high_school" jdbcType="VARCHAR" property="highSchool"/>
-        <result column="grade" jdbcType="INTEGER" property="grade"/>
+        <result column="grade" jdbcType="VARCHAR" property="grade"/>
         <result column="status" jdbcType="BIT" property="status"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="creator" jdbcType="INTEGER" property="creator"/>

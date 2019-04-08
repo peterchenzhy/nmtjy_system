@@ -16,16 +16,21 @@ import java.io.Serializable;
 @Setter
 public class PaymentReq implements Serializable {
 
-    private Long courseRegistrationId ;
+    private Long courseRegistrationId;
 
-    private Long courseId ;
+    private Long courseId;
+
+    @NotNull(message = "学生不能id为空")
+    private Long StudentId;
 
     @NotNull(message = "报名次数不能为空")
-    private int times ;
+    private int times;
 
     private Integer discount = 100;
 
-    private String otherPay =Consts.ZERO_STRING;
+    private String otherPay = Consts.ZERO_STRING;
+
+    private String materialPay = Consts.ZERO_STRING;
 
     private String remark;
 }

@@ -24,7 +24,7 @@ public class StudentReq implements Serializable {
 
     private String highSchool;
 
-    private Integer grade;
+    private String grade;
 
     private String remark;
 
@@ -68,11 +68,11 @@ public class StudentReq implements Serializable {
         this.highSchool = highSchool;
     }
 
-    public Integer getGrade() {
+    public String getGrade() {
         return grade;
     }
 
-    public void setGrade(Integer grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
     }
 

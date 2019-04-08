@@ -1,5 +1,6 @@
 package cn.czy.nmtjy.controller;
 
+import cn.czy.nmtjy.commons.Consts;
 import cn.czy.nmtjy.model.po.StudentPo;
 import cn.czy.nmtjy.model.req.StudentReq;
 import cn.czy.nmtjy.service.student.StudentManagerService;
@@ -21,13 +22,13 @@ public class StudentController  {
     private StudentManagerService studentManagerService;
 
     @RequestMapping(value = "/student/create",method = RequestMethod.POST)
-    public boolean createStudent(@RequestHeader("login-userId") Integer loginUserId,
+    public boolean createStudent(@RequestHeader(Consts.LONGIN_USER) Integer loginUserId,
                                 @RequestBody @Valid StudentReq req) {
         return studentManagerService.insertStudent(loginUserId,req);
     }
 
     @RequestMapping(value = "/student/list",method = RequestMethod.GET)
-    public List<StudentPo> studentList(@RequestHeader("login-userId") Integer loginUserId)
+    public List<StudentPo> studentList(@RequestHeader(Consts.LONGIN_USER) Integer loginUserId)
     {
         return studentManagerService.studentList();
     }

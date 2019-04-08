@@ -38,7 +38,7 @@ public class CourseReq implements Serializable {
     private Integer schoolType;
     private String courseTime;
 
-    private Integer grade; //目标年级
+    private String targetGroup; //目标人群
 
     @NotNull(message = "课程次数不能为空")
     private Integer times;

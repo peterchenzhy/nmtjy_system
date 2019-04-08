@@ -3,14 +3,14 @@
 <mapper namespace="cn.czy.nmtjy.mapper.CourseMapper">
     <resultMap id="BaseResultMap" type="cn.czy.nmtjy.model.po.CoursePo">
         <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="code" jdbcType="INTEGER" property="code"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="course_time" jdbcType="VARCHAR" property="courseTime"/>
         <result column="type" jdbcType="INTEGER" property="type"/>
         <result column="progress" jdbcType="TINYINT" property="progress"/>
         <result column="season" jdbcType="TINYINT" property="season"/>
         <result column="per_time" jdbcType="TINYINT" property="perTime"/>
-        <result column="grade" jdbcType="TINYINT" property="grade"/>
+        <result column="target_group" jdbcType="VARCHAR" property="targetGroup"/>
         <result column="times" jdbcType="TINYINT" property="times"/>
         <result column="school_type" jdbcType="INTEGER" property="schoolType"/>
         <result column="per_price" jdbcType="DECIMAL" property="perPrice"/>
@@ -29,7 +29,7 @@
         <result column="year" jdbcType="INTEGER" property="year"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, code, name, type, progress, season, per_time, grade, times, per_price, material_pay, 
+    id, code, name, type, progress, season, per_time, target_group, times, per_price, material_pay,
     other_pay, start_date, end_date, description, status, remark, creator, create_time, 
     operator, operate_time ,school_type
   </sql>
@@ -41,7 +41,7 @@
     <select id="queryCourses" parameterType="cn.czy.nmtjy.model.po.CoursePo" resultMap="BaseResultMap">
         select * from course where status = 1
         <if test="code != null">
-           and code = #{code}
+            and code = #{code}
         </if>
         <if test="name != null">
             and name = #{name}
@@ -50,7 +50,7 @@
             and type = #{type}
         </if>
         <if test="progress != null">
-           and progress=#{progress}
+            and progress=#{progress}
         </if>
         <if test="season != null">
             and season = #{season}
@@ -58,8 +58,8 @@
         <if test="perTime != null">
             and per_time = #{perTime}
         </if>
-        <if test="grade != null">
-            and grade = #{grade}
+        <if test="targetGroup != null">
+            and target_group = #{targetGroup}
         </if>
         <if test="schoolType != null">
             and school_type = #{schoolType}
@@ -83,7 +83,7 @@
     <insert id="insert" parameterType="cn.czy.nmtjy.model.po.CoursePo">
     insert into course (id, code, name, 
       type, progress, season, 
-      per_time, grade, times, 
+      per_time, target_group, times,
       per_price, material_pay, other_pay, 
       start_date, end_date, description, 
       status, remark, creator, 
@@ -91,7 +91,7 @@
       )
     values (#{id,jdbcType=BIGINT}, #{code,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{type,jdbcType=TINYINT}, #{progress,jdbcType=TINYINT}, #{season,jdbcType=TINYINT}, 
-      #{perTime,jdbcType=TINYINT}, #{grade,jdbcType=TINYINT}, #{times,jdbcType=TINYINT}, 
+      #{perTime,jdbcType=TINYINT}, #{targetGroup}, #{times,jdbcType=TINYINT},
       #{perPrice,jdbcType=DECIMAL}, #{materialPay,jdbcType=DECIMAL}, #{otherPay,jdbcType=DECIMAL}, 
       #{startDate,jdbcType=INTEGER}, #{endDate,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
       #{status,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, #{creator,jdbcType=INTEGER}, 
@@ -119,8 +119,8 @@
             <if test="perTime != null">
                 per_time,
             </if>
-            <if test="grade != null">
-                grade,
+            <if test="targetGroup != null">
+                target_group,
             </if>
             <if test="times != null">
                 times,
@@ -187,8 +187,8 @@
             <if test="perTime != null">
                 #{perTime,jdbcType=TINYINT},
             </if>
-            <if test="grade != null">
-                #{grade,jdbcType=TINYINT},
+            <if test="targetGroup != null">
+                #{targetGroup},
             </if>
             <if test="times != null">
                 #{times,jdbcType=TINYINT},
@@ -259,8 +259,8 @@
             <if test="perTime != null">
                 per_time = #{perTime,jdbcType=TINYINT},
             </if>
-            <if test="grade != null">
-                grade = #{grade,jdbcType=TINYINT},
+            <if test="targetGroup != null">
+                target_group = #{targetGroup},
             </if>
             <if test="times != null">
                 times = #{times,jdbcType=TINYINT},
@@ -315,7 +315,7 @@
       progress = #{progress,jdbcType=TINYINT},
       season = #{season,jdbcType=TINYINT},
       per_time = #{perTime,jdbcType=TINYINT},
-      grade = #{grade,jdbcType=TINYINT},
+      target_group = #{targetGroup},
       times = #{times,jdbcType=TINYINT},
       per_price = #{perPrice,jdbcType=DECIMAL},
       material_pay = #{materialPay,jdbcType=DECIMAL},

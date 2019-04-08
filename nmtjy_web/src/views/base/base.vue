@@ -112,15 +112,15 @@
                                 <Icon type="ios-analytics"/>
                                 课程管理
                             </template>
-                            <MenuItem name="/base/course" > 课程 </MenuItem>
-                            <MenuItem name="/base/course" > 报名 </MenuItem>
+                            <MenuItem name="/base/course"> 课程</MenuItem>
+                            <MenuItem name="/base/course"> 报名</MenuItem>
                         </Submenu>
                         <Submenu name="2">
                             <template slot="title">
-                                <Icon type="ios-filing"/>
+                                <Icon type="ios-analytics"/>
                                 学生管理
                             </template>
-                            <MenuItem name="2-1">option 5</MenuItem>
+                            <MenuItem name="/base/student"> 学生</MenuItem>
                             <MenuItem name="2-2">option 6</MenuItem>
                             <Submenu name="2-0">
                                 <template slot="title">学生管理子菜单</template>
@@ -141,7 +141,7 @@
                                 <Icon type="ios-analytics"/>
                                 用户管理
                             </template>
-                            <MenuItem name="/base/user" >员工管理</MenuItem>
+                            <MenuItem name="/base/user">员工管理</MenuItem>
                         </Submenu>
                     </Menu>
                 </template>
@@ -221,7 +221,7 @@
                 this.$router.push(filterMenus[0].url);
                 this.breadcrumbData.splice(0, 1, filterMenus[0]);
             },
-            navigateTo(to){
+            navigateTo(to) {
                 this.$router.push(to);
             },
             /*下拉菜单选择事件*/

@@ -1,6 +1,7 @@
 package cn.czy.nmtjy.service.student;
 
 import cn.czy.nmtjy.commons.NmtjyException;
+import cn.czy.nmtjy.commons.enums.StatusEnum;
 import cn.czy.nmtjy.mapper.StudentMapper;
 import cn.czy.nmtjy.model.po.StudentPo;
 import cn.czy.nmtjy.model.req.StudentReq;
@@ -41,6 +42,7 @@ public class StudentManagerService {
         po.setElementarySchool(req.getElementarySchool());
         po.setMiddleSchool(req.getMiddleSchool());
         po.setHighSchool(req.getHighSchool());
+        po.setStatus(StatusEnum.有效.getCode());
         po.setGrade(req.getGrade());
         po.setRemark(req.getRemark());
         po.setCreator(loginUserId);
