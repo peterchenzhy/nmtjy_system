@@ -17,25 +17,26 @@ import java.util.Map;
  */
 @RestController
 @Slf4j
+@RequestMapping("/admin")
 public class TestController {
 
     @Autowired
     private CacheManager cacheManager;
 
     @RequestMapping("/test")
-    public String test1(){
+    public String test1() {
         return "hello this is test1 ";
     }
 
     @RequestMapping("/test/cache")
     public String test2() {
-        Map<String,String > map  = (Map<String,String >) EhcacheUtils.getCache(cacheManager, Consts.COURSE_PROGRESS);
-        map.forEach((k,v)->{
+        Map<String, String> map = (Map<String, String>) EhcacheUtils.getCache(cacheManager, Consts.ECACHE_COURSE_CONFIG, Consts.COURSE_PROGRESS);
+        map.forEach((k, v) -> {
             log.warn(k);
             log.warn(v);
         });
 
-        Integer a = 1 ;
+        Integer a = 1;
         log.warn(map.get(a));
 
         return "hello this is test2 ";

@@ -4,7 +4,6 @@ import cn.czy.nmtjy.service.cache.CourseConfigCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,6 +24,6 @@ public class StartService implements ApplicationRunner {
      */
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        cacheService.setConfigService();
+        cacheService.loadConfigService();
     }
 }

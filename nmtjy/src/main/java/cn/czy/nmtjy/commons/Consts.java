@@ -22,7 +22,7 @@ public interface Consts {
     String ZERO_STRING = "0";
 
 
-    String ECACHE_COURSE_CONFIG = "nmyjy.config.cache:10h";
+    String ECACHE_COURSE_CONFIG = "nmyjy.config.cache";
 
     String[] CONFIG_NAME_ARRAYS = {Consts.SCHOOL_TYPE, Consts.COURSE_AREA, Consts.COURSE_PROGRESS, Consts.COURSE_SEASON, Consts.COURSE_TYPE};
 

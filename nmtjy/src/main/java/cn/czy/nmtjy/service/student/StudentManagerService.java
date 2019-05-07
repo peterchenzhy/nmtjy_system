@@ -8,6 +8,7 @@ import cn.czy.nmtjy.model.req.StudentReq;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +26,9 @@ public class StudentManagerService {
     private StudentMapper  studentMapper;
 
     public StudentPo queryStudentByName(String name){
+        if(StringUtils.isEmpty(name)){
+            return null;
+        }
         return studentMapper.queryStudentByName( name);
     }
     private boolean insertStudent(StudentPo student){

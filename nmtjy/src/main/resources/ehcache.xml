@@ -13,7 +13,7 @@
             diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"/>
 
-    <cache name="nmyjy.config.cache:10h"
+    <cache name="nmyjy.config.cache"
            maxElementsInMemory="100000"
            eternal="true"
            overflowToDisk="false"

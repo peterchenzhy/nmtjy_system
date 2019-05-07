@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers("/test/**").permitAll()
+                .antMatchers("/admin/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 //验证登录
@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 http.httpBasic();
                 http.exceptionHandling().authenticationEntryPoint(myAuthenticationEntryPoint);
         http.logout().permitAll();
-        //todo //juest for test
+//        todo //juest for test
 //        http.anonymous().disable();
 
 

@@ -232,8 +232,8 @@
                 loading: true,
                 /*pageInfo实体*/
                 pageInfo: {
-                    page: 0,
-                    pageSize: 10
+                    page: 1,
+                    pageSize: 1
                 },
                 /*course实体*/
                 course: {
@@ -485,7 +485,7 @@
             /*页面初始化调用方法*/
             this.getTable({
                 "pageInfo": this.pageInfo,
-                "loginName": this.loginName
+                "loginName": this.loginName,
             });
             this.getCourseSeasonConfig();
             this.getCourseTypeConfig();
@@ -505,7 +505,7 @@
         methods: {
             /*pageInfo实体初始化*/
             initPageInfo() {
-                this.pageInfo.page = 0;
+                this.pageInfo.page = 1;
                 this.pageInfo.pageSize = 10;
             },
             /*user实体初始化*/
@@ -596,13 +596,13 @@
                     // url: '/users',
                     url: '/courseManager/course',
                     params: {
-                        // 'page':e.pageInfo.page,
-                        // 'pageSize':e.pageInfo.pageSize,
+                        'pageNo':e.pageInfo.page,
+                        'pageSize':e.pageInfo.pageSize
                         // 'loginName':e.loginName
                     }
                 }).then(function (response) {
-                    this.data1 = response.data;
-                    this.total=response.data.totalCount;
+                    this.data1 = response.data.list;
+                    this.total=response.data.total;
                 }.bind(this)).catch(function (error) {
                     alert(error);
                 });
@@ -696,7 +696,7 @@
             },
             /*分页点击事件*/
             pageSearch(e) {
-                this.pageInfo.page = e - 1;
+                this.pageInfo.page = e ;
                 this.getTable({
                     "pageInfo": this.pageInfo,
                     "loginName": this.loginName

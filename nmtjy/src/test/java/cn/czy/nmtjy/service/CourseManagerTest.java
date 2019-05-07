@@ -7,6 +7,7 @@ import cn.czy.nmtjy.model.vo.CourseVo;
 import cn.czy.nmtjy.service.course.CourseManagerService;
 import cn.czy.nmtjy.service.employee.EmployeeService;
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class CourseManagerTest extends BaseTest {
     @Test
     public void test(){
         log.info("test start ..");
-      List<CourseVo> vo = courseManagerService.getAllCourses();
+        PageInfo<CourseVo> vo = courseManagerService.getAllCourses(1,1);
         log.info( JSON.toJSONString(  vo));
         log.info("test end  ...");
     }
