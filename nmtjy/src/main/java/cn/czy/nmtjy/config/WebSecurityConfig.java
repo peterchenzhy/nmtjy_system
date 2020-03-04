@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 http.exceptionHandling().authenticationEntryPoint(myAuthenticationEntryPoint);
         http.logout().permitAll();
 //        todo //juest for test
-//        http.anonymous().disable();
+        http.anonymous().disable();
 
 
 

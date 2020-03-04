@@ -120,13 +120,14 @@
             </div>
         </Modal>
         <!--报名modal-->
-        <Modal :mask-closable="false" :visible.sync="rigisterModal" :loading="loading" v-model="rigisterModal" width="600"
+        <Modal :mask-closable="false" :visible.sync="rigisterModal" :loading="loading" v-model="rigisterModal"
+               width="600"
                title="报名" @on-ok="newOk('newStudent')" @on-cancel="cancel()">
-            <Form ref="newStudent" :model="newStudent" :label-width="80">
+            <Form ref="newRegister" :model="newRegister" :label-width="80">
                 <Row>
                     <Col span="12">
                         <Form-item label="姓名:" prop="name">
-                            <Input v-model="newStudent.name" style="width: 200px"/>
+                            <Input v-model="newRegister.studentName" style="width: 200px"/>
                         </Form-item>
                     </Col>
                     <Col span="12">
@@ -163,7 +164,7 @@
                 loading: true,
                 /*pageInfo实体*/
                 pageInfo: {
-                    page: 0,
+                    page: 1,
                     pageSize: 10
                 },
                 student: {
@@ -186,10 +187,11 @@
                     middleSchool: null,
                     remark: null
                 },
-                rigister: {
+                newRegister: {
                     courseId: null,
                     studentId: null,
                     payStatus: null,
+                    studentName: null,
                     times: null,
                     remark: null
                 },
@@ -242,7 +244,6 @@
                         title: '其他',
                         key: 'remark'
                     },
-
                     {
                         title: '操作',
                         align: 'center',
@@ -255,7 +256,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.rigister(params.row);
+                                            this.torigister(params.row);
                                         }
                                     }
                                 }, '报名')
@@ -297,20 +298,15 @@
                 "pageInfo": this.pageInfo,
                 "loginName": this.loginName
             });
-            this.getCourseSeasonConfig();
-            this.getCourseTypeConfig();
-            this.getCourseAreaConfig();
-            this.getCourseSchoolTypeConfig();
-            this.getCourseProgressConfig();
-            this.axios({
-                method: 'get',
-                // url: '/roles/all'
-                url: '/test'
-            }).then(function (response) {
-                this.data2Temp = response.data;
-            }.bind(this)).catch(function (error) {
-                alert(error);
-            });
+            // this.axios({
+            //     method: 'get',
+            //     // url: '/roles/all'
+            //     url: '/test'
+            // }).then(function (response) {
+            //     this.data2Temp = response.data;
+            // }.bind(this)).catch(function (error) {
+            //     alert(error);
+            // });
         },
         methods: {
             /*pageInfo实体初始化*/
@@ -332,95 +328,15 @@
             getTable(e) {
                 this.axios({
                     method: 'get',
-                    // url: '/users',
                     url: '/student/list',
                     params: {
-                        // 'page':e.pageInfo.page,
-                        // 'pageSize':e.pageInfo.pageSize,
+                        'page': e.pageInfo.page,
+                        'pageSize': e.pageInfo.pageSize,
                         // 'loginName':e.loginName
                     }
                 }).then(function (response) {
                     this.data1 = response.data;
-                    this.total=response.data.totalCount;
-                }.bind(this)).catch(function (error) {
-                    alert(error);
-                });
-            },
-            // 得到配置数据
-            getConfig(e) {
-                this.dataCourseConfigTemp = '';
-                this.axios({
-                    method: 'get',
-                    url: '/course/config/' + e,
-                    params: {}
-                }).then(function (response) {
-                    this.dataCourseConfigTemp = response.data;
-                    // this.total=response.data.totalCount;
-                }.bind(this)).catch(function (error) {
-                    alert(error);
-                });
-            },
-            getCourseTypeConfig() {
-                this.dataCourseConfigTemp = '';
-                this.axios({
-                    method: 'get',
-                    url: '/course/config/COURSE_TYPE',
-                    params: {}
-                }).then(function (response) {
-                    this.dataCourseType = response.data;
-                    // this.total=response.data.totalCount;
-                }.bind(this)).catch(function (error) {
-                    alert(error);
-                });
-            },
-            getCourseSeasonConfig() {
-                this.dataCourseConfigTemp = '';
-                this.axios({
-                    method: 'get',
-                    url: '/course/config/COURSE_SEASON',
-                    params: {}
-                }).then(function (response) {
-                    this.dataCourseSeason = response.data;
-                    // this.total=response.data.totalCount;
-                }.bind(this)).catch(function (error) {
-                    alert(error);
-                });
-            },
-            getCourseAreaConfig() {
-                this.dataCourseConfigTemp = '';
-                this.axios({
-                    method: 'get',
-                    url: '/course/config/COURSE_AREA',
-                    params: {}
-                }).then(function (response) {
-                    this.dataCourseArea = response.data;
-                    // this.total=response.data.totalCount;
-                }.bind(this)).catch(function (error) {
-                    alert(error);
-                });
-            },
-            getCourseSchoolTypeConfig() {
-                this.dataCourseConfigTemp = '';
-                this.axios({
-                    method: 'get',
-                    url: '/course/config/SCHOOL_TYPE',
-                    params: {}
-                }).then(function (response) {
-                    this.dataCourseSchoolType = response.data;
-                    // this.total=response.data.totalCount;
-                }.bind(this)).catch(function (error) {
-                    alert(error);
-                });
-            },
-            getCourseProgressConfig() {
-                this.dataCourseConfigTemp = '';
-                this.axios({
-                    method: 'get',
-                    url: '/course/config/COURSE_PROGRESS',
-                    params: {}
-                }).then(function (response) {
-                    this.dataCourseProgress = response.data;
-                    // this.total=response.data.totalCount;
+                    this.total = response.data.totalCount;
                 }.bind(this)).catch(function (error) {
                     alert(error);
                 });
@@ -567,45 +483,18 @@
                 this.modifyModatrue;
                 this.data1.sort();
             },
-            /*流程配置*/
-            relationSet(e) {
-                // this.roleModal = true;
-                // this.data2 = [];
-                // this.axios({
-                //     method: 'get',
-                //     url: '/relations/' + e.id
-                // }).then(function (response) {
-                //     var roleList = [];
-                //     for (var i in response.data) {
-                //         roleList.push(response.data[i].roleId);
-                //     }
-                //     for (var i in this.data2Temp) {
-                //         if (roleList.indexOf(this.data2Temp[i].id) == -1) {
-                //             this.data2.push({
-                //                 "id": this.data2Temp[i].id,
-                //                 "name": this.data2Temp[i].name,
-                //                 "describe": this.data2Temp[i].describe,
-                //                 "userId": e.id,
-                //                 "_checked": false
-                //             });
-                //         } else {
-                //             this.data2.push({
-                //                 "id": this.data2Temp[i].id,
-                //                 "name": this.data2Temp[i].name,
-                //                 "describe": this.data2Temp[i].describe,
-                //                 "userId": e.id,
-                //                 "_checked": true
-                //             });
-                //         }
-                //     }
-                // }.bind(this)).catch(function (error) {
-                //     alert(error);
-                // });
+            initNewRegister() {
+                this.newRegister.studentName = null;
+                this.newRegister.studentId = null;
+                this.newRegister.courseId = null;
+                this.newRegister.times = null;
+                this.newRegister.courseName = null;
             },
             /*点击详情*/
-            rigister(e) {
+            torigister(e) {
+                this.initNewRegister();
                 this.rigisterModal = true;
-                this.data2 = [e];
+                this.newRegister.studentName = e.name;
             },
             /*详情modal确认按钮点击事件*/
             roleOk() {
@@ -636,9 +525,6 @@
                 //         "roleId": e[i].id
                 //     });
                 // }
-            },
-            selectSeason1(e) {
-                this.newCourse.season = e.value;
             }
         }
     }

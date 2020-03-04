@@ -3,7 +3,10 @@
         <div>
             <Row style="margin-bottom: 25px;">
                 <Col span="8">课程信息：
-                    <Input v-model="loginName" placeholder="请输入..." style="width:200px"></Input>
+                    <Input v-model="courseNamereq" placeholder="请输入..." style="width:200px"></Input>
+                </Col>
+                <Col span="8">学生姓名：
+                    <Input v-model="studentNameReq" placeholder="请输入..." style="width:200px"></Input>
                 </Col>
                 <Col span="8">
                     <Button type="primary" shape="circle" icon="ios-search" @click="search()">搜索</Button>
@@ -13,7 +16,6 @@
         <div>
             <ul>
                 <li>
-                    <Button type="primary" icon="plus-round" @click="openNewModal()">新建</Button>
                     <Button type="success" icon="wrench" @click="openModifyModal()">修改</Button>
                     <!--<Button type="error" icon="trash-a" @click="del()">删除</Button>-->
                 </li>
@@ -168,38 +170,7 @@
 
             </Form>
         </Modal>
-        <!--修改modal-->
-        <Modal :mask-closable="false" :visible.sync="modifyModal" :loading="loading" v-model="modifyModal" width="600"
-               title="修改" @on-ok="modifyOk('userModify')" @on-cancel="cancel()">
-            <Form ref="userModify" :model="userModify" :rules="ruleModify" :label-width="80">
-                <Row>
-                    <Col span="12">
-                        <Form-item label="登录名:" prop="loginName">
-                            <Input v-model="userModify.loginName" style="width: 204px"/>
-                        </Form-item>
-                    </Col>
-                    <Col span="12">
-                        <Form-item label="用户名:" prop="name">
-                            <Input v-model="userModify.name" style="width: 204px"/>
-                        </Form-item>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span="12">
-                        <Form-item label="密码:" prop="password">
-                            <Input v-model="userModify.password" type="password" style="width: 204px"/>
-                        </Form-item>
-                    </Col>
-                </Row>
-                <!--<Row>-->
-                <!--<Col span="12">-->
-                <!--<Form-item label="邮箱:" prop="email">-->
-                <!--<Input v-model="userModify.email" style="width: 204px"/>-->
-                <!--</Form-item>-->
-                <!--</Col>-->
-                <!--</Row>-->
-            </Form>
-        </Modal>
+
         <!--详情modal-->
         <Modal v-model="detailModal" width="1000" title="详情" @on-ok="roleOk()" @on-cancel="cancel()">
             <div>
@@ -220,8 +191,6 @@
     export default {
         data: function () {
             return {
-                /*用于查找的登录名*/
-                loginName: null,
                 /*选择的数量*/
                 count: null,
                 /*选中的组数据*/
@@ -234,6 +203,8 @@
                 detailModal: false,
                 /*分页total属性绑定值*/
                 total: 0,
+                studentNameReq: null,
+                courseNamereq: null,
                 /*loading*/
                 loading: true,
                 /*pageInfo实体*/
@@ -297,46 +268,6 @@
                     description: null,
                     remark: null
                 },
-                /*用于添加的user实体*/
-                userNew: {
-                    id: null,
-                    name: null,
-                    loginName: null,
-                    password: null,
-                    passwordAgain: null,
-                    email: null,
-                    tel: null
-                },
-                /*用于修改的user实体*/
-                userModify: {
-                    id: null,
-                    name: null,
-                    loginName: null,
-                    password: null,
-                    email: null
-                },
-                /*新建验证*/
-                ruleNew: {
-                    name: [
-                        {type: 'string', required: true, message: '输入用户名', trigger: 'blur'}
-                    ],
-                    loginName: [
-                        {type: 'string', required: true, message: '输入登录名', trigger: 'blur'}
-                    ],
-                    password: [
-                        {type: 'string', required: true, message: '输入密码', trigger: 'blur'}
-                    ],
-                    passwordAgain: [
-                        {type: 'string', required: true, message: '输入再次密码', trigger: 'blur'}
-                    ],
-                    email: [
-                        {required: true, message: '输入邮箱', trigger: 'blur'},
-                        {type: 'email', message: '输入正确的邮箱格式', trigger: 'blur'}
-                    ],
-                    tel: [
-                        {type: 'string', required: true, message: '请输入手机号', trigger: 'blur'}
-                    ]
-                },
                 /*修改验证*/
                 ruleModify: {
                     name: [
@@ -362,161 +293,58 @@
                     },
                     {
                         title: '课程编码',
-                        key: 'code'
+                        key: 'courseCode'
                     },
                     {
                         title: '课程名称',
-                        key: 'name'
+                        key: 'courseName'
                     },
                     {
-                        title: '校区',
-                        key: 'areaDescription'
+                        title: '学生姓名',
+                        key: 'studentName'
                     },
                     {
-                        title: '年度',
-                        key: 'year'
+                        title: '报名次数',
+                        key: 'times'
                     },
                     {
-                        title: '进度',
-                        key: 'progressDescription'
+                        title: '付款状态',
+                        key: 'payStatusString'
                     },
-
                     {
-                        title: '操作',
-                        align: 'center',
-                        key: 'action',
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'info',
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.details(params.row);
-                                        }
-                                    }
-                                }, '详情'),
-                                h('Button', {
-                                    props: {
-                                        type: 'info',
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.details(params.row);
-                                        }
-                                    }
-                                }, '报名')
-                            ]);
-                        }
+                        title: '报名备注',
+                        key: 'remark'
                     },
+                    // {
+                    //     title: '操作',
+                    //     align: 'center',
+                    //     key: 'action',
+                    //     render: (h, params) => {
+                    //         return h('div', [
+                    //             h('Button', {
+                    //                 props: {
+                    //                     type: 'info',
+                    //                 },
+                    //                 on: {
+                    //                     click: () => {
+                    //                         this.details(params.row);
+                    //                     }
+                    //                 }
+                    //             }, '详情')
+                    //         ]);
+                    //     }
+                    // },
                 ],
                 /*表数据*/
-                data1: [],
-                /*表显示字段*/
-                columns2: [
-                    {
-                        title: '课程名称',
-                        width: 100,
-                        key: 'name'
-                    },
-                    {
-                        title: '课程类型',
-                        width: 100,
-                        key: 'typeDescription'
-                        // key: 'type'
-                    },
-                    {
-                        title: '课程进度',
-                        width: 100,
-                        key: 'progressDescription'
-                    },
-                    {
-                        title: '课程季节',
-                        width: 100,
-                        key: 'seasonDescription'
-                    },
-                    {
-                        title: '目标年级',
-                        width: 100,
-                        key: 'targetGroup'
-                    },
-                    {
-                        title: '上课时间',
-                        width: 100,
-                        key: 'courseTime'
-                    },
-                    {
-                        title: '单课时间',
-                        width: 100,
-                        key: 'perTime'
-                    },
-                    {
-                        title: '单课费用',
-                        width: 100,
-                        key: 'perPrice'
-                    },
-                    {
-                        title: '材料费',
-                        width: 80,
-                        key: 'materialPay'
-                    },
-                    {
-                        title: '开始日期',
-                        width: 100,
-                        key: 'startDateDescription'
-                    },
-                    {
-                        title: '结束日期',
-                        width: 100,
-                        key: 'endDateDescription'
-                    },
-                    {
-                        title: '其他费用',
-                        width: 100,
-                        key: 'otherPay'
-                    }
-                ],
-                dataCourseConfigTemp: [],
-                dataCourseSeason: [],
-                dataCourseArea: [],
-                dataCourseType: [],
-                dataCourseSchoolType: [],
-                dataCourseProgress: [],
-                /*表数据*/
-                data2: [],
-                /*data2的临时存储*/
-                data2Temp: [],
-                configSelect: '',
-                selectSeason: '',
-                selectArea: '',
-                selectSchoolType: '',
-                selectType: '',
-                selectProgress: '',
-                /*用户与角色关系列表*/
-                relationList: null
+                data1: []
             }
         },
         mounted() {
             /*页面初始化调用方法*/
             this.getTable({
-                "pageInfo": this.pageInfo,
-                "loginName": this.loginName,
+                "pageInfo": this.pageInfo
+                // "loginName": this.loginName,
             });
-            this.getCourseSeasonConfig();
-            this.getCourseTypeConfig();
-            this.getCourseAreaConfig();
-            this.getCourseSchoolTypeConfig();
-            this.getCourseProgressConfig();
-            // this.axios({
-            //     method: 'get',
-            //     // url: '/roles/all'
-            //     url: '/test'
-            // }).then(function (response) {
-            //     this.data2Temp = response.data;
-            // }.bind(this)).catch(function (error) {
-            //     alert(error);
-            // });
         },
         methods: {
             /*pageInfo实体初始化*/
@@ -525,12 +353,9 @@
                 this.pageInfo.pageSize = 10;
             },
             /*user实体初始化*/
-            initUser() {
-                this.user.id = null;
-                this.user.name = null;
-                this.user.loginName = null;
-                this.user.password = null;
-                this.user.email = null;
+            initReq() {
+                this.studentNameReq = null;
+                this.courseNamereq = null;
             },
             /*userNew实体初始化*/
             initNewCourse() {
@@ -609,95 +434,17 @@
             getTable(e) {
                 this.axios({
                     method: 'get',
-                    // url: '/users',
-                    url: '/courseManager/course',
+                    url: '/course/registerInfo',
                     params: {
-                        'pageNo':e.pageInfo.page,
-                        'pageSize':e.pageInfo.pageSize
-                        // 'loginName':e.loginName
+                        'pageNo': e.pageInfo.page,
+                        'pageSize': e.pageInfo.pageSize,
+                        'studentName': this.studentNameReq,
+                        'courseName': this.courseNamereq
                     }
                 }).then(function (response) {
                     this.data1 = response.data.list;
-                    this.total=response.data.total;
-                }.bind(this)).catch(function (error) {
-                    alert(error);
-                });
-            },
-            // 得到配置数据
-            getConfig(e) {
-                this.dataCourseConfigTemp = '';
-                this.axios({
-                    method: 'get',
-                    url: '/course/config/' + e,
-                    params: {}
-                }).then(function (response) {
-                    this.dataCourseConfigTemp = response.data;
-                    // this.total=response.data.totalCount;
-                }.bind(this)).catch(function (error) {
-                    alert(error);
-                });
-            },
-            getCourseTypeConfig() {
-                this.dataCourseConfigTemp = '';
-                this.axios({
-                    method: 'get',
-                    url: '/course/config/COURSE_TYPE',
-                    params: {}
-                }).then(function (response) {
-                    this.dataCourseType = response.data;
-                    // this.total=response.data.totalCount;
-                }.bind(this)).catch(function (error) {
-                    alert(error);
-                });
-            },
-            getCourseSeasonConfig() {
-                this.dataCourseConfigTemp = '';
-                this.axios({
-                    method: 'get',
-                    url: '/course/config/COURSE_SEASON',
-                    params: {}
-                }).then(function (response) {
-                    this.dataCourseSeason = response.data;
-                    // this.total=response.data.totalCount;
-                }.bind(this)).catch(function (error) {
-                    alert(error);
-                });
-            },
-            getCourseAreaConfig() {
-                this.dataCourseConfigTemp = '';
-                this.axios({
-                    method: 'get',
-                    url: '/course/config/COURSE_AREA',
-                    params: {}
-                }).then(function (response) {
-                    this.dataCourseArea = response.data;
-                    // this.total=response.data.totalCount;
-                }.bind(this)).catch(function (error) {
-                    alert(error);
-                });
-            },
-            getCourseSchoolTypeConfig() {
-                this.dataCourseConfigTemp = '';
-                this.axios({
-                    method: 'get',
-                    url: '/course/config/SCHOOL_TYPE',
-                    params: {}
-                }).then(function (response) {
-                    this.dataCourseSchoolType = response.data;
-                    // this.total=response.data.totalCount;
-                }.bind(this)).catch(function (error) {
-                    alert(error);
-                });
-            },
-            getCourseProgressConfig() {
-                this.dataCourseConfigTemp = '';
-                this.axios({
-                    method: 'get',
-                    url: '/course/config/COURSE_PROGRESS',
-                    params: {}
-                }).then(function (response) {
-                    this.dataCourseProgress = response.data;
-                    // this.total=response.data.totalCount;
+                    this.total = response.data.total;
+                    this.initReq();
                 }.bind(this)).catch(function (error) {
                     alert(error);
                 });
@@ -706,60 +453,49 @@
             search() {
                 this.initPageInfo();
                 this.getTable({
-                    "pageInfo": this.pageInfo,
-                    "loginName": this.loginName
+                    "pageInfo": this.pageInfo
                 });
             },
             /*分页点击事件*/
             pageSearch(e) {
-                this.pageInfo.page = e ;
+                this.pageInfo.page = e;
                 this.getTable({
-                    "pageInfo": this.pageInfo,
-                    "loginName": this.loginName
+                    "pageInfo": this.pageInfo
                 });
-            },
-            /*新建点击触发事件*/
-            openNewModal() {
-                this.newModal = true;
-                // this.initUserNew();
-                this.initNewCourse();
-                // this.data1.sort();
-                this.count = 0;
-                this.groupId = null;
             },
             /*新建modal的newOk点击事件*/
             newOk(newCourse) {
-                this.$refs[newCourse].validate((valid) => {
-                    if (valid) {
-                        // this.initUser();
-                        // this.userSet(this.userNew);
-                        console.log(this.newCourse);
-                        this.axios({
-                            method: 'put',
-                            url: '/courseManager/course',
-                            data: this.newCourse
-                        }).then(function (response) {
-                            // this.initUserNew();
-                            this.initNewCourse();
-                            this.getTable({
-                                "pageInfo": this.pageInfo,
-                                "loginName": this.loginName
-                            });
-                            this.$Message.info('新建成功');
-                        }.bind(this)).catch(function (error) {
-                            alert(error);
-                        });
-                        this.newModal = false;
-                    } else {
-                        this.$Message.error('表单验证失败!');
-                        setTimeout(() => {
-                            this.loading = false;
-                            this.$nextTick(() => {
-                                this.loading = true;
-                            });
-                        }, 1000);
-                    }
-                });
+                // this.$refs[newCourse].validate((valid) => {
+                //     if (valid) {
+                //         // this.initUser();
+                //         // this.userSet(this.userNew);
+                //         console.log(this.newCourse);
+                //         this.axios({
+                //             method: 'put',
+                //             url: '/courseManager/course',
+                //             data: this.newCourse
+                //         }).then(function (response) {
+                //             // this.initUserNew();
+                //             this.initNewCourse();
+                //             this.getTable({
+                //                 "pageInfo": this.pageInfo,
+                //                 "loginName": this.loginName
+                //             });
+                //             this.$Message.info('新建成功');
+                //         }.bind(this)).catch(function (error) {
+                //             alert(error);
+                //         });
+                //         this.newModal = false;
+                //     } else {
+                //         this.$Message.error('表单验证失败!');
+                //         setTimeout(() => {
+                //             this.loading = false;
+                //             this.$nextTick(() => {
+                //                 this.loading = true;
+                //             });
+                //         }, 1000);
+                //     }
+                // });
             },
             /*点击修改时判断是否只选择一个*/
             openModifyModal() {
@@ -783,8 +519,7 @@
                         }).then(function (response) {
                             this.initUserNew();
                             this.getTable({
-                                "pageInfo": this.pageInfo,
-                                "loginName": this.loginName
+                                "pageInfo": this.pageInfo
                             });
                             this.$Message.info('修改成功');
                         }.bind(this)).catch(function (error) {
@@ -813,14 +548,6 @@
                 }
                 this.setGroupId(e);
             },
-            /*通过选中的行设置groupId的值*/
-            setGroupId(e) {
-                this.groupId = [];
-                this.count = e.length;
-                for (var i = 0; i <= e.length - 1; i++) {
-                    this.groupId.push(e[i].id);
-                }
-            },
             /*删除table中选中的数据*/
             del() {
                 // if (this.groupId != null && this.groupId != "") {
@@ -847,79 +574,12 @@
                 this.modifyModatrue;
                 this.data1.sort();
             },
-            /*流程配置*/
-            relationSet(e) {
-                // this.roleModal = true;
-                // this.data2 = [];
-                // this.axios({
-                //     method: 'get',
-                //     url: '/relations/' + e.id
-                // }).then(function (response) {
-                //     var roleList = [];
-                //     for (var i in response.data) {
-                //         roleList.push(response.data[i].roleId);
-                //     }
-                //     for (var i in this.data2Temp) {
-                //         if (roleList.indexOf(this.data2Temp[i].id) == -1) {
-                //             this.data2.push({
-                //                 "id": this.data2Temp[i].id,
-                //                 "name": this.data2Temp[i].name,
-                //                 "describe": this.data2Temp[i].describe,
-                //                 "userId": e.id,
-                //                 "_checked": false
-                //             });
-                //         } else {
-                //             this.data2.push({
-                //                 "id": this.data2Temp[i].id,
-                //                 "name": this.data2Temp[i].name,
-                //                 "describe": this.data2Temp[i].describe,
-                //                 "userId": e.id,
-                //                 "_checked": true
-                //             });
-                //         }
-                //     }
-                // }.bind(this)).catch(function (error) {
-                //     alert(error);
-                // });
-            },
+
             /*点击详情*/
             details(e) {
-                this.detailModal = true;
-                this.data2 = [e];
+                // this.detailModal = true;
+                // this.data2 = [e];
             },
-            /*详情modal确认按钮点击事件*/
-            roleOk() {
-                // if (this.relationList != null) {
-                //     this.axios({
-                //         method: 'post',
-                //         url: '/relations',
-                //         data: this.relationList
-                //     }).then(function (response) {
-                //         this.$Message.info('配置成功');
-                //     }.bind(this)).catch(function (error) {
-                //         alert(error);
-                //     });
-                //     this.relationList = null;
-                // }
-            },
-            /*详情modal中表选择改变事件*/
-            change2(e) {
-                // this.relationList = [];
-                // if (e.length == 0) {
-                //     this.relationList.push({
-                //         "userId": this.data2[0].userId
-                //     });
-                // }
-                // for (var i in e) {
-                //     this.relationList.push({
-                //         "userId": e[i].userId,
-                //         "roleId": e[i].id
-                //     });
-                // }
-            },
-            selectSeason1(e) {
-                this.newCourse.season = e.value;
-            }
         }
     }
 </script>

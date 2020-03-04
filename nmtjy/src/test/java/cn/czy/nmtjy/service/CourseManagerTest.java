@@ -25,10 +25,10 @@ public class CourseManagerTest extends BaseTest {
     private CourseManagerService courseManagerService;
 
     @Test
-    public void test(){
+    public void test() {
         log.info("test start ..");
-        PageInfo<CourseVo> vo = courseManagerService.getAllCourses(1,1);
-        log.info( JSON.toJSONString(  vo));
+        PageInfo<CourseVo> vo = courseManagerService.getAllCourses(1, 1, null);
+        log.info(JSON.toJSONString(vo));
         log.info("test end  ...");
     }
 }

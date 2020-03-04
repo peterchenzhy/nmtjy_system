@@ -5,10 +5,8 @@ import cn.czy.nmtjy.commons.NmtjyException;
 import cn.czy.nmtjy.mapper.CourseMapper;
 import cn.czy.nmtjy.model.po.CoursePo;
 import cn.czy.nmtjy.model.req.CourseReq;
-import cn.czy.nmtjy.model.req.CourseSearchReq;
 import cn.czy.nmtjy.model.vo.CourseVo;
 import cn.czy.nmtjy.service.cache.EhcacheUtils;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +55,7 @@ public class CourseManagerService {
      */
     public boolean insertCourse(CoursePo po) {
         checkParam(po);
-        po.setCode(this.generateCode(po.getYear(), po.getArea(), po.getType()));
+        po.setCode(generateCode(po.getYear(), po.getArea(), po.getType()));
         return this.courseMapper.insertSelective(po) > 0;
     }
 
@@ -108,7 +106,7 @@ public class CourseManagerService {
         }
     }
 
-    public List<CoursePo> getCourse(CourseSearchReq req) {
+    public List<CoursePo> getCourse(CoursePo req) {
         return this.courseMapper.queryCourses(req);
     }
 
@@ -120,10 +118,12 @@ public class CourseManagerService {
      * @modifier PeterChen
      * @since 2019/3/30 17:06
      */
-    public PageInfo<CourseVo> getAllCourses(int pageSize, int pageNo) {
+    public PageInfo<CourseVo> getAllCourses(int pageSize, int pageNo, String courseName) {
 
+        CoursePo search = new CoursePo();
+        search.setName(courseName);
         PageHelper.startPage(pageNo, pageSize);
-        List<CoursePo> poList = this.getCourse(null);
+        List<CoursePo> poList = this.getCourse(search);
         PageInfo<CoursePo> poPageInfo = new PageInfo<>(poList);
 
         List<CourseVo> voList = new ArrayList<>(poList.size());

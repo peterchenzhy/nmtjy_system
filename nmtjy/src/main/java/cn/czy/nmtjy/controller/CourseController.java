@@ -21,36 +21,39 @@ public class CourseController {
     private CourseManagerService courseManagerService;
 
     /**
-    * 创建课程
-    * @author PeterChen
-    * @modifier PeterChen
-    * @version v1
-    * @since 2019/2/25 21:16
-    * @param loginUserId
-    * @param req
-    * @summary
-    * @return  boolean
-    */
-    @RequestMapping(value = "/courseManager/course",method = RequestMethod.PUT)
-    public boolean createCourse(@RequestHeader(Consts.LONGIN_USER) Integer loginUserId, @RequestBody @Valid CourseReq req){
-        return courseManagerService.insertCourse(loginUserId,req);
-    }
-    /**
-    * 获取所有课程
-    * @author PeterChen
-    * @modifier PeterChen
-    * @version v1
-    * @since 2019/2/25 21:16
-    * @param loginUserId
-    * @summary
-    * @return  java.util.List<cn.czy.nmtjy.model.po.CoursePo>
-    */
-    @RequestMapping(value = "/courseManager/course",method = RequestMethod.GET)
-    public PageInfo<CourseVo> getAllCourses(@RequestHeader(Consts.LONGIN_USER) Integer loginUserId,
-                                            @RequestParam(value = "pageSize",required = false,defaultValue = "10") int pageSize,
-                                            @RequestParam(value = "pageNo",required = false,defaultValue = "1") int pageNo){
-        return courseManagerService.getAllCourses( pageSize ,pageNo );
+     * 创建课程
+     *
+     * @param loginUserId
+     * @param req
+     * @return boolean
+     * @author PeterChen
+     * @modifier PeterChen
+     * @version v1
+     * @summary
+     * @since 2019/2/25 21:16
+     */
+    @RequestMapping(value = "/courseManager/course", method = RequestMethod.PUT)
+    public boolean createCourse(@RequestHeader(Consts.LONGIN_USER) Integer loginUserId, @RequestBody @Valid CourseReq req) {
+        return courseManagerService.insertCourse(loginUserId, req);
     }
 
+    /**
+     * 获取所有课程
+     *
+     * @param loginUserId
+     * @return java.util.List<cn.czy.nmtjy.model.po.CoursePo>
+     * @author PeterChen
+     * @modifier PeterChen
+     * @version v1
+     * @summary
+     * @since 2019/2/25 21:16
+     */
+    @RequestMapping(value = "/courseManager/course", method = RequestMethod.GET)
+    public PageInfo<CourseVo> getAllCourses(@RequestHeader(Consts.LONGIN_USER) Integer loginUserId,
+                                            @RequestParam(value = "courseName", required = false) String courseName,
+                                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
+                                            @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo) {
+        return courseManagerService.getAllCourses(pageSize, pageNo,courseName);
+    }
 
 }

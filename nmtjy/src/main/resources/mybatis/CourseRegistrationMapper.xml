@@ -24,6 +24,21 @@
         from course_registration
         where id = #{id,jdbcType=BIGINT}
     </select>
+    <select id="query" resultType="cn.czy.nmtjy.model.po.CourseRegistrationVo">
+        select cr.id as id ,cr.course_id as courseId ,cs.name as courseName,cs.code as courseCode,
+        cr.student_id as studentId,st.name as studentName ,
+        cr.times as times, cr.pay_status as payStatus, cr.remark as remark
+        from course_registration cr
+        inner join student st on st.id = cr.id and st.status =1
+        <if test="studentName != null">
+         and st.name = #{studentName}
+        </if>
+        inner join course  cs on cs.id = cr.course_id and cs.status = 1
+        <if test="courseName != null">
+            and cs.name like CONCAT('%',#{courseName} ,'%')
+        </if>
+        where cr.status =1
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from course_registration
     where id = #{id,jdbcType=BIGINT}

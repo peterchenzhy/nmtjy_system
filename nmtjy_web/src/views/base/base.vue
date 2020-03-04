@@ -114,6 +114,7 @@
                             </template>
                             <MenuItem name="/base/course"> 课程</MenuItem>
                             <MenuItem name="/base/register"> 报名</MenuItem>
+                            <MenuItem name="/base/registerInfo"> 报名信息</MenuItem>
                         </Submenu>
                         <Submenu name="2">
                             <template slot="title">

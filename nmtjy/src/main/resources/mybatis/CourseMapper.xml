@@ -44,7 +44,7 @@
             and code = #{code}
         </if>
         <if test="name != null">
-            and name = #{name}
+            and name like CONCAT('%',#{name} ,'%')
         </if>
         <if test="type != null">
             and type = #{type}
@@ -74,7 +74,6 @@
             <![CDATA[
            and  end_date <= #{endDate}  ]]>
         </if>
-
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from course
